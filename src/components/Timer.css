@@ -1,0 +1,10 @@
+@keyframes blink {
+    0% { stroke: red; }
+    50% { stroke: transparent; }
+    100% { stroke: red; }
+  }
+  
+  .blink {
+    animation: blink 1s linear infinite;
+  }
+  

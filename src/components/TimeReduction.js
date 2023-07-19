@@ -1,22 +1,17 @@
-import { Button } from '@mui/material'
-import React from 'react'
+import { Button } from '@mui/material';
+import React from 'react';
+import axios from 'axios';
 
 function TimeReduction(props) {
     const { id, nickname, time } = props;
 
     const onClickTimeReductionHandler = (e) => {
-        fetch(`http://localhost:8080/api/v1/rooms/${id}/games/time-reduction`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                nickname,
-                time
-            }),
+        axios.post(`http://localhost:8080/api/v1/rooms/${id}/games/time-reduction`, {
+            nickname,
+            time
         })
-        .catch((error) => {
-            console.error('Error:', error);
+        .catch(error => {
+            console.error(error);
         });
     }
 

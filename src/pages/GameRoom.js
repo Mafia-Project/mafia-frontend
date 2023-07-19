@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import TimeReduction from '../components/TimeReduction';
 import { Client } from '@stomp/stompjs';
+import Timer from '../components/Timer';
 
 class GameRoom extends React.Component {
     constructor(props) {
@@ -9,7 +10,9 @@ class GameRoom extends React.Component {
 
         this.state = {
             time: 10,
-            nickname: '정우진'
+            nickname: '정우진',
+            isTimeAble: true,
+            
         };
 
         this.client = new Client({
@@ -25,12 +28,10 @@ class GameRoom extends React.Component {
 
     componentDidMount() {
         this.client.onConnect = (frame) => {
-            console.log('Connected: ' + frame);
             this.client.subscribe(`/sub/rooms/${this.props.id}`, (message) => {
                 if (message.body) {
                     const body = JSON.parse(message.body);
-                    console.log("Received: " + body);
-                    
+
                     if (body.type === 'TIME_REDUCTION') {
                         this.onFetchStateTimeHandler(body.time);
                     }
@@ -50,7 +51,7 @@ class GameRoom extends React.Component {
 
     render() {
         const { id } = this.props;
-        const { time, nickname } = this.state;
+        const { time, nickname, isTimeAble } = this.state;
 
         return (
             <div>
@@ -61,11 +62,11 @@ class GameRoom extends React.Component {
                     time={time}
                 />
 
-                <div>
-                    {id}
-                    {time}
-                    {nickname}
-                </div>
+                <Timer
+                    isTimeAble={isTimeAble} 
+                    time={time} 
+                    setTime={this.onFetchStateTimeHandler}
+                />
             </div>
         );
     }
