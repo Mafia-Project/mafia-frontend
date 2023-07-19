@@ -60,7 +60,11 @@ export default function GameStartBtnComponent(props) {
             ...roomInfo,
             nickname:props.nickname
           }; 
-          axios.post('http://localhost:8080/api/v1/createRoom', { newRoomInfo }).then((res) => {});
+          axios.post('http://localhost:8080/api/v1/createRoom', { newRoomInfo })
+            .then((res) => {
+              
+            
+          });
           setIsModalOpen(false);
           modalWindow.close();
         });

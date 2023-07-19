@@ -1,30 +1,28 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import CreateRoomBtnComponent from '../components/CreateRoomBtnComponent';
 import MainLabelComponent from '../components/MainLabelComponent';
 import ParticipantRoomBtnComponent from '../components/ParticipantRoomBtnComponent';
+import indexStore  from '../store/Store';
+import { useObserver } from 'mobx-react-lite';
 
-class Main extends Component {
-  constructor(props){
-    super(props);
-    this.state = {nickname : "" };
-  };
 
-  handleInputChange = (event) => {
-    this.setState({ nickname: event.target.value });
-  }
+const Main = () => {
+    const { nickNameStore }  = indexStore();
 
-  render() {
-    return (
-      <div>
-        <MainLabelComponent/>
-        <label>닉네임 : </label>
-        <input type='text' onChange={this.handleInputChange}/>
-        <CreateRoomBtnComponent nickname={this.state.nickname} />
-        <ParticipantRoomBtnComponent nickname={this.state.nickname} />
-      </div>
-    )
-  }
+    const handleInputChange = (event) => {
+        nickNameStore.setNickname(event.target.value);
+    }
+
+    return useObserver(() => (
+        <div>
+            <MainLabelComponent />
+            <label>닉네임 : </label>
+            <input type='text' onChange={handleInputChange} />
+            <CreateRoomBtnComponent nickname={nickNameStore.nickname} />
+            <ParticipantRoomBtnComponent nickname={nickNameStore.nickname} />
+        </div>
+    ));
 }
 
 export default Main;
