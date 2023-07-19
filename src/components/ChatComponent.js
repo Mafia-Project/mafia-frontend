@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
 
-const CitizenChatComponent = ({dayNight, job}) => {
+const ChatComponent = ({job, dayNight}) => {
   // 부모 컴포넌트?mobx?에서 가져온 데이터라고 가정
   const [roomsNumber, setRoomsNumber] = useState('1'); // 방 고유번호
   const [username, setUsername] = useState('test_user'); // 유저 이름
 
   const [commonMessages, setCommonMessages] = useState([]); // 공용 채팅 로그 메시지
-  const [mafiaMessages, setMafiaMessages] = useState([]); // 공용 채팅 로그 메시지
+  const [mafiaMessages, setMafiaMessages] = useState([]); // 마피아 채팅 로그 메시지
   const [inputValue, setInputValue] = useState(''); // 채팅 입력 메시지
 
   const stompClientRef = useRef(null);
@@ -20,7 +20,7 @@ const CitizenChatComponent = ({dayNight, job}) => {
     return () => {
       disconnectFromWebSocket();
     };
-  }, []);
+  }, [job, dayNight]);
 
   // WebSocket 연결
   const connectToWebSocket = () => {
@@ -58,8 +58,8 @@ const CitizenChatComponent = ({dayNight, job}) => {
     if (dayNight === 'night' && job === '마피아') {
       setMafiaMessages((prevMessages) => [...prevMessages, newMessage]);
       console.log(3, job, dayNight);
-    } 
-    else {
+    }
+    else if(dayNight === 'afternoon') {
       setCommonMessages((prevMessages) => [...prevMessages, newMessage]);
       console.log(4, job, dayNight);
     }
@@ -92,7 +92,8 @@ const CitizenChatComponent = ({dayNight, job}) => {
   return (
     <div className="chat-window">
       <div className="chat-log">
-        {(dayNight === 'night' && job === '마피아'
+        {
+        (dayNight === 'night' && job === '마피아'
           ? mafiaMessages
           : commonMessages
         ).map((message, index) => (
@@ -112,11 +113,17 @@ const CitizenChatComponent = ({dayNight, job}) => {
         />
         <button
         onClick={handleSendMessage}
-        disabled={dayNight === 'night'  && job !== '마피아'}   // 밤이면 채팅 전송 비활성화
+        disabled={dayNight === 'night' && job !== '마피아'}   // 밤이면 채팅 전송 비활성화
         >전송</button>
       </div>
+
+      <div>
+      <p>dayNight 값: {dayNight}</p>
+      <p>job 값: {job}</p>
+    </div>
+
     </div>
   );
 };
 
-export default CitizenChatComponent;
+export default ChatComponent;

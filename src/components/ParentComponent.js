@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ChatWindow from './ChatWindow';
+import ChatComponent from './ChatComponent';
 
 const ParentComponent = () => {
   const [job, setJob] = useState('-');
@@ -21,7 +21,7 @@ const ParentComponent = () => {
         console.log('밤 선택');
         setDayNight('night')}}>상태: 밤</button>
 
-      <ChatWindow job={job} dayNight={dayNight} />
+      <ChatComponent job={job} dayNight={dayNight} />
     </div>
   );
 };

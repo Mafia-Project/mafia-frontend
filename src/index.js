@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import ChatWindow from './chat/ChatWindow';
-import ParentComponent from './chat/ParentComponent';
+import ParentComponent from './components/ParentComponent';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
