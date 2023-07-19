@@ -60,10 +60,16 @@ export default function GameStartBtnComponent(props) {
             ...roomInfo,
             nickname:props.nickname
           }; 
-          axios.post('http://localhost:8080/api/v1/createRoom', { newRoomInfo })
-            .then((res) => {
-              
-            
+
+          axios.post('http://localhost:8080/api/v1/createRoom', { 
+            nickname: newRoomInfo.nickname,
+            playerNum : newRoomInfo.playerNum,
+            useReporter : newRoomInfo.useReporter,
+            usePsychopath : newRoomInfo.usePsychopath,
+            isHost : newRoomInfo.isHost
+          }).then((res) => {
+           //TODO navigator 이용해서 Router의 '/rooms/:id'로 이동시키기.
+            // navigator()
           });
           setIsModalOpen(false);
           modalWindow.close();
