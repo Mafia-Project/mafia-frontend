@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Client } from '@stomp/stompjs';
+import { Button, List, ListItem, TextField } from '@mui/material';
 
 
-const ChatComponent = ({job, dayNight}) => {
-  // 부모 컴포넌트?mobx?에서 가져온 데이터라고 가정
+const ChatComponent = ({job, dayNight, killed}) => {
+  // mobx에서 가져온 데이터라고 가정
   const [roomsNumber, setRoomsNumber] = useState('1'); // 방 고유번호
   const [username, setUsername] = useState('test_user'); // 유저 이름
+  //const [killed, setKilled] = useState(true); // 유저 생존 여부
 
   const [commonMessages, setCommonMessages] = useState([]); // 공용 채팅 로그 메시지
   const [mafiaMessages, setMafiaMessages] = useState([]); // 마피아 채팅 로그 메시지
@@ -20,7 +22,7 @@ const ChatComponent = ({job, dayNight}) => {
     return () => {
       disconnectFromWebSocket();
     };
-  }, [job, dayNight]);
+  }, [job, dayNight, killed]);
 
   // WebSocket 연결
   const connectToWebSocket = () => {
@@ -53,14 +55,14 @@ const ChatComponent = ({job, dayNight}) => {
 
   // 메시지 저장
   const saveMessage = (message) => {
-    const newMessage = { ...message, username: username };
+    //const newMessage = { ...message, username: username };
     
     if (dayNight === 'night' && job === '마피아') {
-      setMafiaMessages((prevMessages) => [...prevMessages, newMessage]);
+      setMafiaMessages((prevMessages) => [...prevMessages, message]);
       console.log(3, job, dayNight);
     }
     else if(dayNight === 'afternoon') {
-      setCommonMessages((prevMessages) => [...prevMessages, newMessage]);
+      setCommonMessages((prevMessages) => [...prevMessages, message]);
       console.log(4, job, dayNight);
     }
 
@@ -77,6 +79,7 @@ const ChatComponent = ({job, dayNight}) => {
       const message = {
         roomsNumber: roomsNumber,
         dayNight: dayNight,
+        job: job,
         username: username,
         content: inputValue,
       };
@@ -91,37 +94,50 @@ const ChatComponent = ({job, dayNight}) => {
 
   return (
     <div className="chat-window">
-      <div className="chat-log">
-        {
-        (dayNight === 'night' && job === '마피아'
-          ? mafiaMessages
-          : commonMessages
-        ).map((message, index) => (
-          <div key={index} className="message">
-            <span className="username">{message.username}: </span>
-            {message.content}
+        <List className="chat-log">
+          {(dayNight === 'night' && job === '마피아'
+            ? mafiaMessages
+            : commonMessages
+          ).map((message, index) => (
+            <ListItem key={index}>
+              <span className="username">{message.username}: </span>
+              <span className="content">{message.content} </span>
+            </ListItem>
+          ))}
+        </List>
+      
+      
+      {/* 죽지 않았을 때만 렌더링 */}
+      {!killed && (
+        <div className="chat-input">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <TextField
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              label="메시지를 입력하세요."
+              variant="outlined"
+              fullWidth
+              disabled={dayNight === 'night' && job !== '마피아'}
+              style={{ height: '40px' }}
+            />
+            <Button
+              onClick={handleSendMessage}
+              disabled={dayNight === 'night' && job !== '마피아'}
+              variant="contained"
+              color="primary"
+              style={{ marginLeft: '10px', height: '40px' }}
+            >
+              전송
+            </Button>
           </div>
-        ))}
-      </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="메시지를 입력하세요."
-          disabled={dayNight === 'night' && job !== '마피아'}   // 밤이면 채팅 입력창 비활성화
-        />
-        <button
-        onClick={handleSendMessage}
-        disabled={dayNight === 'night' && job !== '마피아'}   // 밤이면 채팅 전송 비활성화
-        >전송</button>
-      </div>
+        </div>
+      )}
 
       <div>
-      <p>dayNight 값: {dayNight}</p>
-      <p>job 값: {job}</p>
-    </div>
-
+        <p>dayNight 값: {dayNight}</p>
+        <p>job 값: {job}</p>
+      </div>
     </div>
   );
 };

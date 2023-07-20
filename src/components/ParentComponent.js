@@ -5,6 +5,9 @@ const ParentComponent = () => {
   const [job, setJob] = useState('-');
   const [dayNight, setDayNight] = useState('-');
 
+  // mobx에서 가져온 데이터라고 가정
+  const [killed, setKilled] = useState('false');
+
   return (
     <div>
       <button onClick={() => {
@@ -21,7 +24,12 @@ const ParentComponent = () => {
         console.log('밤 선택');
         setDayNight('night')}}>상태: 밤</button>
 
-      <ChatComponent job={job} dayNight={dayNight} />
+      
+      <button onClick={() => {
+        console.log(killed);
+        setKilled(!killed)}}>죽음</button>
+
+      <ChatComponent job={job} dayNight={dayNight} killed={killed} />
     </div>
   );
 };
