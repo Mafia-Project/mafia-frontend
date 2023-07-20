@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import TimeReduction from '../components/TimeReduction';
+import TimeReduction from '../components/Timer/TimeReduction';
 import { Client } from '@stomp/stompjs';
-import Timer from '../components/Timer';
+import Timer from '../components/Timer/Timer';
 import indexStore from '../store/Store';
+import GamePlayerList from '../components/Game/GamePlayerList';
 
 const GameRoom = () => {
     const { id } = useParams();
     const stompClientRef = useRef(null);
     const [time, setTime] = useState(70);
     const [isTimeAble, setIsTimeAble] = useState(true);
-    const { nickNameStore, usersStore } = indexStore();
+    const { nickNameStore, usersStore, voteStore } = indexStore();
 
     useEffect(() => {
         connectToWebSocket();
@@ -18,7 +19,6 @@ const GameRoom = () => {
             disconnectFromWebSocket();
         };
     }, []);
-
 
     const connectToWebSocket = () => {
         const socket = new WebSocket('ws://localhost:8080/connect');
@@ -34,6 +34,13 @@ const GameRoom = () => {
                     if (body.type === 'TIME_REDUCTION') {
                         setTime(body.time);
                     }
+                    if(body.type === 'CURRENT_VOTE'){
+                        voteStore.removeAll();
+                        voteStore.addAll(body.currentVotes);
+                    }
+                    if(body.type === 'VOTE'){
+                        voteStore.removeAll();
+                    }
                 }
             });
         };
@@ -48,17 +55,24 @@ const GameRoom = () => {
 
     return (
         <div>
-            <TimeReduction
-                id={id}
-                nickname={nickNameStore.nickname}
-                time={time}
-            />
-
-            <Timer
-                isTimeAble={isTimeAble}
-                time={time}
-                setTime={setTime}
-            />
+            <div>
+                <Timer
+                    isTimeAble={isTimeAble}
+                    time={time}
+                    setTime={setTime}
+                />
+                
+            </div>
+            <div>
+                <GamePlayerList id={id} />
+            </div>
+            <div>
+                <TimeReduction
+                    id={id}
+                    nickname={nickNameStore.nickname}
+                    time={time}
+                />
+            </div>
         </div>
     );
 }
