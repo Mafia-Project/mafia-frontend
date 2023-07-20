@@ -7,7 +7,7 @@ import GameRoomBodyComponent from './components/GameRoomBodyComponent';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <GameRoomBodyComponent />
+    <App />
   </React.StrictMode>,
 );
 

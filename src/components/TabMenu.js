@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Typography, Box } from '@mui/material';
+import GameRoom from '../pages/GameRoom';
 
 const TabMenu = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -16,7 +17,8 @@ const TabMenu = () => {
       </Tabs>
       <TabPanel value={activeTab} index={0}>
         {/* 활동 탭에 해당하는 컴포넌트 */}
-        <Typography>활동 내용을 보여주는 컴포넌트</Typography>
+        {/* <Typography>활동 내용을 보여주는 컴포넌트</Typography> */}
+        <GameRoom/>
       </TabPanel>
       <TabPanel value={activeTab} index={1}>
         {/* 메모 탭에 해당하는 컴포넌트 */}

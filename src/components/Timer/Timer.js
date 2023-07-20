@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import './Timer.css'; // 이곳에서 애니메이션 스타일을 가져옵니다.
+import './Timer.css';
 
 function Timer({ isTimeAble, time, setTime }) {
   const intervalRef = useRef(null);

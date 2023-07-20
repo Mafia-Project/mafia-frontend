@@ -1,9 +1,9 @@
 import React from 'react';
 import './GameRoomBodyComponent.css';
-import ParentComponent from './ParentComponent';
-import ChatComponent from './ChatComponent';
+import ChatComponent from './Chat/ChatComponent';
 import TabMenu from './TabMenu';
 import JobDescription from './JobDescription';
+import ParentComponent from './Chat/ParentComponent';
 
 const GameRoomBodyComponent = () => {
     //const job = { name: '마피아' };

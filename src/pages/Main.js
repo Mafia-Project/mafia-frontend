@@ -18,7 +18,7 @@ const Main = () => {
         <div>
             <MainLabelComponent />
             <label>닉네임 : </label>
-            <input type='text' onChange={handleInputChange} />
+            <input type='text' value={nickNameStore.nickname} onChange={handleInputChange} />
             <CreateRoomBtnComponent nickname={nickNameStore.nickname} />
             <ParticipantRoomBtnComponent nickname={nickNameStore.nickname} />
         </div>
