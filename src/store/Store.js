@@ -8,15 +8,7 @@ const nickNameStore = observable({
 });
 
 const usersStore = observable({
-    users: [
-        {nickname: '우진', job: 'MAFIA', killed: false, host: true},
-        {nickname: '주원', job: 'POLICE', killed: false, host: false},
-        {nickname: '우현', job: 'DOCTOR', killed: true, host: false},
-        {nickname: '희아', job: 'MAFIA', killed: true, host: false},
-        {nickname: '승훈', job: 'CITIZEN', killed: false, host: false},
-        {nickname: '민수B', job: 'CITIZEN', killed: false, host: false},
-        {nickname: '민수A', job: 'CITIZEN', killed: false, host: false},
-    ],
+    users: [],
     removeAll() {
         this.users = [];
     },
