@@ -1,21 +1,14 @@
 import { Box } from '@mui/material';
 import React from 'react';
-import { voteApi } from '../../public/api/axios';
 import GameVote from './GameVote';
 import GamePlayerComponent from './GamePlayerComponent';
 
 function GamePlayer(props) {
-    const { id, voter, nickname, job, killed, voteNum, alive, host } = props;
-    const onClickVoteHander = () => {
-        if (killed || alive) return;
-        voteApi(id, voter, nickname);
-    }
+    const { nickname, job, killed, voteNum, host, dateNight } = props;
 
     return (
         <>
-            <Box
-                onClick={() => onClickVoteHander()}
-            >
+            <Box>
                 <GamePlayerComponent 
                     nickname={nickname}
                     job={job}

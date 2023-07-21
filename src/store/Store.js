@@ -18,19 +18,20 @@ const usersStore = observable({
         // {nickname: '민수A', job: 'CITIZEN', killed: false, host: false},
     ],
     removeAll() {
-        if (this.users.length === 0) return;
+        if (this.users) return;
         this.users = [];
     },
     addAll(users) {
         this.users = users;
     },
     get sortedUsers() {
+        if(!this.users) return [];
         return this.users.slice().sort((a, b) => a.nickname.localeCompare(b.nickname));
     },
     get findAliveByNickname(){
         return (nickname) => {
             const foundUser = this.users.find(user => user.nickname === nickname);
-            return foundUser.killed;
+            return foundUser;
         }
     },
 });

@@ -38,7 +38,7 @@ const GameRoom = (props) => {
             stompClient.subscribe(`/sub/rooms/${id}`, (message) => {
                 if (message.body) {
                     const body = JSON.parse(message.body);
-                    
+                    console.log(body);
                     if (body.type === 'TIME_REDUCTION') {
                         console.log(body.time);
                         gameRoomInfoStore.setTime(body.time);
@@ -50,22 +50,26 @@ const GameRoom = (props) => {
                     if(body.type === 'VOTE'){
                         voteStore.removeAll();
                     }
-                    if(body.type === 'USER_INFO'){
+                    if(body.type === 'USER_INFO'|| body.type === 'NIGHT_END'){
                         usersStore.removeAll();
                         usersStore.addAll(body.playerInfo);
                     }
                     if(body.type === 'START'){
                         usersStore.removeAll();
                         usersStore.addAll(body.playerInfo);
+                        gameRoomInfoStore.setDayNight('night');
                         gameRoomInfoStore.setTime(body.playerInfo.length * 20);
                         gameRoomInfoStore.startTimer();
+                    }
+                    if(body.type === 'VOTE_RESULT'){
+                        voteStore.removeAll();
+                        usersStore.removeAll();
+                        usersStore.addAll(body.playerInfo);
                     }
                 }
             },
             sendInitMsg()
             );
-
-
         };
         stompClient.activate();
     };

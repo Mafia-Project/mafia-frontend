@@ -5,7 +5,7 @@ import indexStore from '../../store/Store';
 
 function TimeReduction() {
     //const { id, nickname, time } = props;
-    const { nickNameStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
+    const { nickNameStore,  gameRoomInfoStore } = indexStore();
 
     const onClickTimeReductionHandler = (e) => {
         console.log(gameRoomInfoStore.roomKey, nickNameStore.nickname, gameRoomInfoStore.time);

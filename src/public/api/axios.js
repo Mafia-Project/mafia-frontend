@@ -31,3 +31,14 @@ export const gameStartApi = (id) => {
         console.error(error);
     });
 }
+
+export const gameJobEventApi = (id, nickname, target, job) => {
+    console.log(id, nickname, target, job);
+    instance.post(`/rooms/${id}/games`, {
+        nickname,
+        target,
+        job
+    }).catch(error => {
+        console.error(error);
+    })
+}
