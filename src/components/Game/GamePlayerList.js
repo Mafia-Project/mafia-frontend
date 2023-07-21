@@ -4,6 +4,7 @@ import indexStore from '../../store/Store';
 import GamePlayer from './GamePlayer';
 import { observer } from 'mobx-react-lite';
 import { gameJobEventApi, voteApi } from '../../public/api/axios';
+import citizen from '../../public/image/citizen.PNG';
 
 const GamePlayerList = observer(({ id }) => (
     <Container maxWidth="xs" sx={{ minWidth: '750px' }}>
@@ -19,13 +20,13 @@ const GamePlayerList = observer(({ id }) => (
                                 indexStore().gameRoomInfoStore.dayNight
                             )}>
                             <GamePlayer
-                                id={id}
                                 nickname={user.nickname}
                                 job={user.job}
                                 killed={user.killed}
                                 host={user.host}
                                 voteNum={indexStore().voteStore.findVoteNumByNickname(user.nickname)}
                                 dateNight={indexStore().gameRoomInfoStore.dayNight}
+                                image={citizen}
                             />
                         </Box>
                     )
