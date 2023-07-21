@@ -34,6 +34,15 @@ const usersStore = observable({
             return foundUser;
         }
     },
+    findJobByNickname(nickname) {
+        console.log(131313, nickname)
+        const foundUser = this.users.find(user => user.nickname === nickname);
+        return foundUser ? foundUser.job : null;
+    },
+    findKilledByNickname(nickname) {
+        const foundUser = this.users.find(user => user.nickname === nickname);
+        return foundUser ? foundUser.killed : null;
+    },
 });
 
 
@@ -54,7 +63,7 @@ const voteStore = observable({
 });
 
 const gameRoomInfoStore = observable({
-    roomKey: '96837',
+    roomKey: '01f0c',
     time: 0,
     dayNight: 'afternoon',
     timerId: null,

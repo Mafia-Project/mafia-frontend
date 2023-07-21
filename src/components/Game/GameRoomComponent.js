@@ -7,6 +7,7 @@ import GameHeaderComponent from './GameHeaderComponent';
 import GameFooterComponent from './GameFooterComponent';
 import { useParams } from 'react-router-dom';
 import indexStore from '../../store/Store';
+import ChatComponent from '../Chat/ChatComponent';
 
 const GameRoomComponent = () => {
     //const job = { name: '마피아' };
@@ -32,7 +33,7 @@ const GameRoomComponent = () => {
           </div>
     
           <div className="right-area" style={{ flex: 1, overflowY: 'auto' }}> {/* 오른쪽 공간 */}
-            <ParentComponent />
+            <ChatComponent />
           </div>
         </div>
   
