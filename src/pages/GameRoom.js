@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
 import indexStore from '../store/Store';
 import GamePlayerList from '../components/Game/GamePlayerList';
