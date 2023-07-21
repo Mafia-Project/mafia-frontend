@@ -37,22 +37,65 @@ export default function GameStartBtnComponent(props) {
     if(props.nickname.replace(/(\s*)/g, "")!==""){
       if (!isModalOpen) {
         setIsModalOpen(true);
-        const modalWindow = window.open('', 'createRoom', 'width=400,height=300');
+        const modalWindow = window.open('', 'createRoom', 'width=350,height=400');
         modalWindow.document.write(`
-          <div>
-            <h2>OPTION</h2>
-            <button id="close">X</button>
-            <label>플레이어 수 : </label>
-            <input type="number" id="playerNum" name="playerNum" value="${roomInfo.playerNum}" min='4' max='19'/> <br/>
-            <label>추가 직업 </label>
-            <div>
-              <label>기자 </label>
-              <input type="checkbox" id="useReporter" name="useReporter" value="${roomInfo.useReporter}"/> <br/>
-              <label>정신병자 </label>
-              <input type="checkbox" id="usePsychopath" name="usePsychopath" value="${roomInfo.usePsychopath}"/> <br/>
-            </div>    
-            <button id="setting">설정</button>
-          </div>
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>Create Room</title>
+              <style>
+                * {
+                  margin: 0;
+                  padding: 0;
+                }
+
+                .OptionContainer{
+                  display:flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  height: 100vh;
+                }
+                #close {
+                  background-color: black;
+                  color: #ffffff;
+                  border: none;
+                  border-radius: 50%;
+                  padding: 5px 10px;
+                  font-size: 18px;
+                  cursor: pointer;
+                  margin-top: -15px;
+                  margin-right: -15px;
+                  align-self: flex-end;
+                }
+                
+                
+              
+              </style>
+            </head>
+            <body>
+              <div class="OptionContainer">
+                <h2>OPTION</h2>
+                <button id="close">X</button>
+                <div class="player">
+                  <label>플레이어 수 : </label>
+                  <input type="number" id="playerNum" name="playerNum" value="${roomInfo.playerNum}" min='4' max='19'/> <br/>
+                </div>
+                <div class="jobs">
+                  <label>추가 직업 </label>
+                  <div class="job1">
+                    <label>기자 </label>
+                    <input type="checkbox" id="useReporter" name="useReporter" value="${roomInfo.useReporter}"/> <br/>
+                  </div>
+                  <div class="job2">
+                    <label>정신병자 </label>
+                    <input type="checkbox" id="usePsychopath" name="usePsychopath" value="${roomInfo.usePsychopath}"/> <br/>
+                  </div>    
+                </div>
+                <button id="setting">설정</button>    
+              </div>
+            </body>
+            </html>
         `);
 
         modalWindow.document.getElementById('playerNum').onchange=handleInputChange;
