@@ -18,11 +18,11 @@ const usersStore = observable({
         // {nickname: '민수A', job: 'CITIZEN', killed: false, host: false},
     ],
     removeAll() {
+        if (this.users.length === 0) return;
         this.users = [];
     },
     addAll(users) {
-        this.users = this.users.concat(users);
-        console.log(users);
+        this.users = users;
     },
     get sortedUsers() {
         return this.users.slice().sort((a, b) => a.nickname.localeCompare(b.nickname));

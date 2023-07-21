@@ -4,7 +4,7 @@ import citizen from '../../public/image/citizen.PNG'
 import { Box, Typography } from '@mui/material'
 
 function GamePlayerComponent(props) {
-    const { nickname, job, killed } = props;
+    const { nickname, job, killed, host } = props;
 
     return (
         <Box
@@ -25,7 +25,7 @@ function GamePlayerComponent(props) {
                 job={job}
                 killed={killed}
             />
-            <GamePlayerNickName nickname={nickname} />
+            <GamePlayerNickName nickname={nickname} host={host} />
             {killed && <GamePlayerOut />}
         </Box>
     )
@@ -50,8 +50,7 @@ function GamePlayerImage(props) {
 }
 
 function GamePlayerNickName(props) {
-    const { nickname } = props;
-
+    const { nickname, host } = props;
     return (
         <Box
             sx={{
@@ -72,7 +71,7 @@ function GamePlayerNickName(props) {
                     fontWeight: 'bold',
                 }}
             >
-                {nickname}
+                {host ? `👑 ${nickname}` : nickname}
             </Typography>
         </Box>
     )

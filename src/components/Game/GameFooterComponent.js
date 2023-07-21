@@ -2,11 +2,13 @@ import React from 'react';
 import TimeReduction from '../Timer/TimeReduction';
 import GameStart from './GameStart';
 
-const GameFooterComponent = () => {
+const GameFooterComponent = (props) => {
+    const {id, host} = props;
+
     return (
         <div>
             <TimeReduction/>
-            <GameStart />
+            <GameStart id={id} host={host}/>
         </div>
     );
 };

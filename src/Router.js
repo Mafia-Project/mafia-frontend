@@ -10,9 +10,9 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path='/rooms/:id/:host' element={<GameRoom />} />
+        {/* <Route path='/rooms/:id/:host' element={<GameRoom />} /> */}
         <Route path='/chat' element={<ParentComponent />} />
-        <Route path='/gameRoom/:id' element={<GameRoomComponent />} />
+        <Route path='/rooms/:id/:host' element={<GameRoomComponent />} />
       </Routes>
     </BrowserRouter>
   )

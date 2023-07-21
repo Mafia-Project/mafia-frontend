@@ -24,3 +24,10 @@ export const timeReductionApi = (id, nickname, time) => {
         console.error(error);
     });
 }
+
+export const gameStartApi = (id) => {
+    instance.post(`/rooms/${id}/start-game`)
+    .catch(error => {
+        console.error(error);
+    });
+}

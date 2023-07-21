@@ -4,11 +4,15 @@ import JobDescription from './JobDescription';
 import TabMenu from '../TabMenu';
 import ParentComponent from '../Chat/ParentComponent';
 import GameHeaderComponent from './GameHeaderComponent';
-import Timer from '../Timer/Timer';
 import GameFooterComponent from './GameFooterComponent';
+import { useParams } from 'react-router-dom';
+import indexStore from '../../store/Store';
 
 const GameRoomComponent = () => {
     //const job = { name: '마피아' };
+    const { id, host } = useParams();
+    const { nickNameStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
+
 
     return (
       <div className="game-room-container">
@@ -24,7 +28,7 @@ const GameRoomComponent = () => {
           </div>
     
           <div className="center-area"> {/* 가운데 공간 */}
-            <TabMenu />
+            <TabMenu id={id} host={host}/>
           </div>
     
           <div className="right-area" style={{ flex: 1, overflowY: 'auto' }}> {/* 오른쪽 공간 */}
@@ -34,7 +38,7 @@ const GameRoomComponent = () => {
   
         {/* 푸터 공간 */}
         <div className="footer-area"> 
-          <GameFooterComponent />
+          <GameFooterComponent id={id} host={host}/>
         </div>
       </div>
     );

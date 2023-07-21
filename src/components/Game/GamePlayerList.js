@@ -1,37 +1,32 @@
 import { Box, Container, Grid } from '@mui/material'
-import React, { useState } from 'react'
+import React from 'react'
 import indexStore from '../../store/Store';
 import GamePlayer from './GamePlayer';
+import { observer } from 'mobx-react-lite';
 
-function GamePlayerList(props) {
-    const { id } = props;
-    const [ voteAble, setVoteAble ] = useState(true);
-    const { nickNameStore, usersStore, voteStore } = indexStore();
-    
-    return (
-        <Container maxWidth="xs" sx={{ minWidth: '750px' }}>
-            <Box sx={{ width: 1 }}>
-                <Box display="grid" gridTemplateColumns="repeat(15, 1fr)" gap={3}>
-                    {
-                        usersStore.sortedUsers.map((user) =>
-                            <Box gridColumn="span 3" key={user.nickname}>
-                                <GamePlayer 
-                                    id={id}
-                                    voter={nickNameStore.nickname}
-                                    nickname={user.nickname}
-                                    job={user.job}
-                                    killed={user.killed}
-                                    voteNum={voteStore.findVoteNumByNickname(user.nickname)}
-                                    voteAble={voteAble}
-                                    alive={usersStore.findAliveByNickname(nickNameStore.nickname)}
-                                />
-                            </Box>
-                        )
-                    }
-                </Box>
+const GamePlayerList = observer(({ id }) => (
+    <Container maxWidth="xs" sx={{ minWidth: '750px' }}>
+        <Box sx={{ width: 1 }}>
+            <Box display="grid" gridTemplateColumns="repeat(15, 1fr)" gap={3}>
+                {
+                    indexStore().usersStore.sortedUsers.map((user) =>
+                        <Box gridColumn="span 3" key={user.nickname}>
+                            <GamePlayer
+                                id={id}
+                                voter={indexStore().nickNameStore.nickname}
+                                nickname={user.nickname}
+                                job={user.job}
+                                killed={user.killed}
+                                host={user.host}
+                                voteNum={indexStore().voteStore.findVoteNumByNickname(user.nickname)}
+                                alive={indexStore().usersStore.findAliveByNickname(indexStore().nickNameStore.nickname)}
+                            />
+                        </Box>
+                    )
+                }
             </Box>
-        </Container>
-    )
-}
+        </Box>
+    </Container>
+));
 
 export default GamePlayerList

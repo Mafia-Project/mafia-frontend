@@ -5,10 +5,9 @@ import GameVote from './GameVote';
 import GamePlayerComponent from './GamePlayerComponent';
 
 function GamePlayer(props) {
-    const { id, voter, nickname, job, killed, voteAble, voteNum, alive } = props;
-
+    const { id, voter, nickname, job, killed, voteNum, alive, host } = props;
     const onClickVoteHander = () => {
-        if (!voteAble || killed || alive) return;
+        if (killed || alive) return;
         voteApi(id, voter, nickname);
     }
 
@@ -21,6 +20,7 @@ function GamePlayer(props) {
                     nickname={nickname}
                     job={job}
                     killed={killed}
+                    host={host}
                 />
             </Box>
             <Box

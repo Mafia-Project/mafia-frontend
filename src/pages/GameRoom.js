@@ -1,18 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import TimeReduction from '../components/Timer/TimeReduction';
 import { Client } from '@stomp/stompjs';
-import Timer from '../components/Timer/Timer';
 import indexStore from '../store/Store';
 import GamePlayerList from '../components/Game/GamePlayerList';
 
-const GameRoom = () => {
-
-    //const { id } = useParams();
-    const { id, host } = useParams();
+const GameRoom = (props) => {
+    const { id, host } = props;
     const stompClientRef = useRef(null);
-    //const [time, setTime] = useState(70);
-    const [isTimeAble, setIsTimeAble] = useState(true);
     const { nickNameStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
 
     useEffect(() => {
@@ -42,11 +35,10 @@ const GameRoom = () => {
 
         stompClientRef.current = stompClient;
         stompClient.onConnect = () => {
-            stompClient.subscribe(`/sub/rooms/${gameRoomInfoStore.roomKey}`, (message) => {
+            stompClient.subscribe(`/sub/rooms/${id}`, (message) => {
                 if (message.body) {
                     const body = JSON.parse(message.body);
                     
-                    console.log(body);
                     if (body.type === 'TIME_REDUCTION') {
                         console.log(body.time);
                         gameRoomInfoStore.setTime(body.time);
@@ -58,9 +50,15 @@ const GameRoom = () => {
                     if(body.type === 'VOTE'){
                         voteStore.removeAll();
                     }
-                    if(body.messageType === 'USER_INFO'){
+                    if(body.type === 'USER_INFO'){
                         usersStore.removeAll();
                         usersStore.addAll(body.playerInfo);
+                    }
+                    if(body.type === 'START'){
+                        usersStore.removeAll();
+                        usersStore.addAll(body.playerInfo);
+                        gameRoomInfoStore.setTime(body.playerInfo.length * 20);
+                        gameRoomInfoStore.startTimer();
                     }
                 }
             },
@@ -80,23 +78,7 @@ const GameRoom = () => {
 
     return (
         <div>
-            {/* <div>
-                <Timer
-                    isTimeAble={isTimeAble}
-                    time={time}
-                    setTime={setTime}
-                />
-            </div> */}
-            <div>
-                <GamePlayerList id={gameRoomInfoStore.roomKey} />
-            </div>
-            {/* <div>
-                <TimeReduction
-                    id={id}
-                    nickname={nickNameStore.nickname}
-                    time={time}
-                />
-            </div> */}
+            <GamePlayerList id={id} />
         </div>
     );
 }
