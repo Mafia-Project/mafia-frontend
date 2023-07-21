@@ -18,7 +18,7 @@ const GameRoomComponent = () => {
       <div className="game-room-container">
         {/* 헤더 공간 */}
         <div className="header-area"> 
-          < GameHeaderComponent />
+          < GameHeaderComponent id={id}/>
         </div>
   
         {/* 바디 공간 */}
