@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import indexStore from '../store/Store';
 
 export default function GameStartBtnComponent(props) {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState({
     nickname: "",
@@ -10,6 +13,7 @@ export default function GameStartBtnComponent(props) {
     usePsychopath: false,
     isHost: true
   });
+  const { nickNameStore, usersStore, voteStore } = indexStore();
   
   const handleInputChange = (e) => {
     let newRoomInfo = roomInfo;
@@ -33,7 +37,7 @@ export default function GameStartBtnComponent(props) {
     if(props.nickname.replace(/(\s*)/g, "")!==""){
       if (!isModalOpen) {
         setIsModalOpen(true);
-        const modalWindow = window.open('', 'Modal', 'width=400,height=300');
+        const modalWindow = window.open('', 'createRoom', 'width=400,height=300');
         modalWindow.document.write(`
           <div>
             <h2>OPTION</h2>
@@ -61,6 +65,8 @@ export default function GameStartBtnComponent(props) {
             nickname:props.nickname
           }; 
 
+          nickNameStore.setNickname(props.nickname);
+
           axios.post('http://localhost:8080/api/v1/createRoom', { 
             nickname: newRoomInfo.nickname,
             playerNum : newRoomInfo.playerNum,
@@ -68,8 +74,9 @@ export default function GameStartBtnComponent(props) {
             usePsychopath : newRoomInfo.usePsychopath,
             isHost : newRoomInfo.isHost
           }).then((res) => {
-           //TODO navigator 이용해서 Router의 '/rooms/:id'로 이동시키기.
-            // navigator()
+            navigate(`/rooms/${res.data.roomKey}/${newRoomInfo.isHost}`);
+          }).catch((e)=>{
+            console.log(e);
           });
           setIsModalOpen(false);
           modalWindow.close();

@@ -7,7 +7,9 @@ import indexStore from '../store/Store';
 import GamePlayerList from '../components/Game/GamePlayerList';
 
 const GameRoom = () => {
+
     //const { id } = useParams();
+    const { id, host } = useParams();
     const stompClientRef = useRef(null);
     //const [time, setTime] = useState(70);
     const [isTimeAble, setIsTimeAble] = useState(true);
@@ -19,6 +21,18 @@ const GameRoom = () => {
             disconnectFromWebSocket();
         };
     }, []);
+
+    const sendInitMsg = () => {
+        const message = {
+            nickname: nickNameStore.nickname,
+            host: host
+        };
+
+        stompClientRef.current.publish({
+            destination: `/pub/rooms/${id}/join-game`,
+            body: JSON.stringify(message),
+        });
+    }
 
     const connectToWebSocket = () => {
         const socket = new WebSocket('ws://localhost:8080/connect');
@@ -42,8 +56,16 @@ const GameRoom = () => {
                     if(body.type === 'VOTE'){
                         voteStore.removeAll();
                     }
+                    if(body.messageType === 'USER_INFO'){
+                        usersStore.removeAll();
+                        usersStore.addAll(body.playerInfo);
+                    }
                 }
-            });
+            },
+            sendInitMsg()
+            );
+
+
         };
         stompClient.activate();
     };
