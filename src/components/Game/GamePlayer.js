@@ -5,7 +5,6 @@ import GamePlayerComponent from './GamePlayerComponent';
 
 function GamePlayer(props) {
     const { nickname, job, killed, voteNum, host, dateNight, image } = props;
-    console.log(image);
     return (
         <>
             <Box>

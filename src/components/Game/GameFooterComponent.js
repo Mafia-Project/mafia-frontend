@@ -7,7 +7,7 @@ const GameFooterComponent = (props) => {
 
     return (
         <div>
-            <TimeReduction/>
+            <TimeReduction id={id}/>
             <GameStart id={id} host={host}/>
         </div>
     );
