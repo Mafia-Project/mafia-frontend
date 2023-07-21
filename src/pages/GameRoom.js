@@ -45,6 +45,8 @@ const GameRoom = () => {
             stompClient.subscribe(`/sub/rooms/${gameRoomInfoStore.roomKey}`, (message) => {
                 if (message.body) {
                     const body = JSON.parse(message.body);
+                    
+                    console.log(body);
                     if (body.type === 'TIME_REDUCTION') {
                         console.log(body.time);
                         gameRoomInfoStore.setTime(body.time);

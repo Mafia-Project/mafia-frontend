@@ -13,7 +13,7 @@ const TabMenu = () => {
     <div>
       <Tabs value={activeTab} onChange={handleTabChange} centered>
         <Tab label="활동" sx={{ width: '100%' }} />
-        <Tab label="메모" sx={{ width: '100%' }} />
+        <Tab label="직업 정보" sx={{ width: '100%' }} />
       </Tabs>
       <TabPanel value={activeTab} index={0}>
         {/* 활동 탭에 해당하는 컴포넌트 */}
