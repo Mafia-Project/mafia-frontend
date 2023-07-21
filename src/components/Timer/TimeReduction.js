@@ -1,12 +1,15 @@
 import { Button } from '@mui/material';
 import React from 'react';
 import { timeReductionApi } from '../../public/api/axios';
+import indexStore from '../../store/Store';
 
-function TimeReduction(props) {
-    const { id, nickname, time } = props;
+function TimeReduction() {
+    //const { id, nickname, time } = props;
+    const { nickNameStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
 
     const onClickTimeReductionHandler = (e) => {
-        timeReductionApi(id, nickname, time);
+        console.log(gameRoomInfoStore.roomKey, nickNameStore.nickname, gameRoomInfoStore.time);
+        timeReductionApi(gameRoomInfoStore.roomKey, nickNameStore.nickname, gameRoomInfoStore.time);
     }
 
     return (

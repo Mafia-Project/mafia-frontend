@@ -17,7 +17,6 @@ const TabMenu = () => {
       </Tabs>
       <TabPanel value={activeTab} index={0}>
         {/* 활동 탭에 해당하는 컴포넌트 */}
-        {/* <Typography>활동 내용을 보여주는 컴포넌트</Typography> */}
         <GameRoom/>
       </TabPanel>
       <TabPanel value={activeTab} index={1}>

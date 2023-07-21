@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Main from './pages/Main'
 import GameRoom from './pages/GameRoom'
 import ParentComponent from './components/Chat/ParentComponent'
-import GameRoomBodyComponent from './components/GameRoomBodyComponent'
+import GameRoomComponent from './components/Game/GameRoomComponent'
 
 function Router() {
   return (
@@ -12,7 +12,7 @@ function Router() {
         <Route path="/" element={<Main />} />
         <Route path='/rooms/:id' element={<GameRoom />} />
         <Route path='/chat' element={<ParentComponent />} />
-        <Route path='/gameRoom' element={<GameRoomBodyComponent />} />
+        <Route path='/gameRoom/:id' element={<GameRoomComponent />} />
       </Routes>
     </BrowserRouter>
   )

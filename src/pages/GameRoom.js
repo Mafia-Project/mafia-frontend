@@ -9,9 +9,9 @@ import GamePlayerList from '../components/Game/GamePlayerList';
 const GameRoom = () => {
     const { id } = useParams();
     const stompClientRef = useRef(null);
-    const [time, setTime] = useState(70);
+    //const [time, setTime] = useState(70);
     const [isTimeAble, setIsTimeAble] = useState(true);
-    const { nickNameStore, usersStore, voteStore } = indexStore();
+    const { nickNameStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
 
     useEffect(() => {
         connectToWebSocket();
@@ -32,7 +32,8 @@ const GameRoom = () => {
                 if (message.body) {
                     const body = JSON.parse(message.body);
                     if (body.type === 'TIME_REDUCTION') {
-                        setTime(body.time);
+                        console.log(body.time);
+                        gameRoomInfoStore.setTime(body.time);
                     }
                     if(body.type === 'CURRENT_VOTE'){
                         voteStore.removeAll();
@@ -55,24 +56,23 @@ const GameRoom = () => {
 
     return (
         <div>
-            <div>
+            {/* <div>
                 <Timer
                     isTimeAble={isTimeAble}
                     time={time}
                     setTime={setTime}
                 />
-                
-            </div>
+            </div> */}
             <div>
                 <GamePlayerList id={id} />
             </div>
-            <div>
+            {/* <div>
                 <TimeReduction
                     id={id}
                     nickname={nickNameStore.nickname}
                     time={time}
                 />
-            </div>
+            </div> */}
         </div>
     );
 }
