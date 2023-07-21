@@ -5,10 +5,11 @@ import RoomCodeComponent from './RoomCodeComponent';
 
 const GameHeaderComponent = (props) => {
     console.log(props.id);
+
     return (
         <div>
             <GoBackComponent id={props.id} host={props.host}/>
-            <Timer/>
+            <Timer id={props.id}/>
             <RoomCodeComponent id={props.id}/>
         </div>
     );

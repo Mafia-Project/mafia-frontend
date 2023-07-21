@@ -1,22 +1,14 @@
 import { observable } from 'mobx';
 
 const nickNameStore = observable({
-    nickname: "우진",
+    nickname: "",
     setNickname(nickname) {
         this.nickname = nickname;
     }
 });
 
 const usersStore = observable({
-    users: [
-        // {nickname: '우진', job: 'MAFIA', killed: false, host: true},
-        // {nickname: '주원', job: 'POLICE', killed: false, host: false},
-        // {nickname: '우현', job: 'DOCTOR', killed: true, host: false},
-        // {nickname: '희아', job: 'MAFIA', killed: true, host: false},
-        // {nickname: '승훈', job: 'CITIZEN', killed: false, host: false},
-        // {nickname: '민수B', job: 'CITIZEN', killed: false, host: false},
-        // {nickname: '민수A', job: 'CITIZEN', killed: false, host: false},
-    ],
+    users: [],
     removeAll() {
         if (this.users) return;
         this.users = [];
@@ -54,10 +46,12 @@ const voteStore = observable({
 });
 
 const gameRoomInfoStore = observable({
-    roomKey: '96837',
+    roomKey: '',
     time: 0,
     dayNight: 'afternoon',
     timerId: null,
+    voteAble: false,
+    apiAble: false,
     
     setRoomKey(roomKey) {
         this.roomKey = roomKey;
@@ -67,6 +61,12 @@ const gameRoomInfoStore = observable({
     },
     setDayNight(dayNight) {
         this.dayNight = dayNight;
+    },
+    setVoteAble(voteAble){
+        this.voteAble = voteAble;
+    },
+    setApiAble(apiAble){
+        this.apiAble = apiAble;
     },
 
     // 타이머 시작

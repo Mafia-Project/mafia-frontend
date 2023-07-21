@@ -50,7 +50,7 @@ const GameRoom = (props) => {
                     if(body.type === 'VOTE'){
                         voteStore.removeAll();
                     }
-                    if(body.type === 'USER_INFO'|| body.type === 'NIGHT_END'){
+                    if(body.type === 'USER_INFO'){
                         usersStore.removeAll();
                         usersStore.addAll(body.playerInfo);
                     }
@@ -58,13 +58,35 @@ const GameRoom = (props) => {
                         usersStore.removeAll();
                         usersStore.addAll(body.playerInfo);
                         gameRoomInfoStore.setDayNight('night');
-                        gameRoomInfoStore.setTime(body.playerInfo.length * 20);
+                        gameRoomInfoStore.setTime(body.playerInfo.filter(player => !player.killed).length * 7);
                         gameRoomInfoStore.startTimer();
+                        gameRoomInfoStore.setApiAble(true);
+                    }
+                    if(body.type === 'NIGHT_END'){
+                        usersStore.removeAll();
+                        usersStore.addAll(body.playerInfo);
+                        gameRoomInfoStore.setDayNight('afternoon');
+                        gameRoomInfoStore.setTime(body.playerInfo.filter(player => !player.killed).length * 20);
+                        gameRoomInfoStore.setVoteAble(true);
+                        gameRoomInfoStore.startTimer();
+                        gameRoomInfoStore.setApiAble(true);
                     }
                     if(body.type === 'VOTE_RESULT'){
                         voteStore.removeAll();
                         usersStore.removeAll();
                         usersStore.addAll(body.playerInfo);
+                        gameRoomInfoStore.setDayNight('night');
+                        gameRoomInfoStore.setTime(body.playerInfo.filter(player => !player.killed).length * 7);
+                        gameRoomInfoStore.startTimer();
+                        gameRoomInfoStore.setApiAble(true);
+                    }
+                    if(body.type === 'END'){
+                        gameRoomInfoStore.setApiAble(false);
+                        setTimeout(() => {
+                            gameRoomInfoStore.stopTimer();
+                            gameRoomInfoStore.setTime(0);
+                            gameRoomInfoStore.setVoteAble(false);
+                        },1000);
                     }
                 }
             },
