@@ -17,7 +17,8 @@ const GamePlayerList = observer(({ id }) => (
                                 id,
                                 indexStore().usersStore.findAliveByNickname(indexStore().nickNameStore.nickname),
                                 user,
-                                indexStore().gameRoomInfoStore.dayNight
+                                indexStore().gameRoomInfoStore.dayNight,
+                                indexStore().gameRoomInfoStore.voteAble
                             )}>
                             <GamePlayer
                                 nickname={user.nickname}
@@ -36,9 +37,9 @@ const GamePlayerList = observer(({ id }) => (
     </Container>
 ));
 
-const onClickGameEvent = (id, user, target, dateNight) => {
+const onClickGameEvent = (id, user, target, dateNight, voteAble) => {
     if (target.killed || user.killed ) return;
-    if(dateNight === 'afternoon') voteApi(id, user.nickname, target.nickname);
-    if(dateNight === 'night' && user.nickname !== target.nickname) gameJobEventApi(id, user.nickname, target.nickname, user.job);
+    if(dateNight === 'afternoon' && voteAble) voteApi(id, user.nickname, target.nickname);
+    if(dateNight === 'night' ) gameJobEventApi(id, user.nickname, target.nickname, user.job);
 }
 export default GamePlayerList

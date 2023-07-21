@@ -33,12 +33,23 @@ export const gameStartApi = (id) => {
 }
 
 export const gameJobEventApi = (id, nickname, target, job) => {
-    console.log(id, nickname, target, job);
     instance.post(`/rooms/${id}/games`, {
         nickname,
         target,
         job
     }).catch(error => {
+        console.error(error);
+    })
+}
+
+export const gameNightEndApi = (id) => {
+    instance.post(`/rooms/${id}/night-end`).catch(error => {
+        console.error(error);
+    })
+}
+
+export const gameVoteResultApi = (id) => {
+    instance.get(`/rooms/${id}/vote`).catch(error => {
         console.error(error);
     })
 }

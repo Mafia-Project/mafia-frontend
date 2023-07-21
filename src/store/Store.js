@@ -50,6 +50,8 @@ const gameRoomInfoStore = observable({
     time: 0,
     dayNight: 'afternoon',
     timerId: null,
+    voteAble: false,
+    apiAble: false,
     
     setRoomKey(roomKey) {
         this.roomKey = roomKey;
@@ -59,6 +61,12 @@ const gameRoomInfoStore = observable({
     },
     setDayNight(dayNight) {
         this.dayNight = dayNight;
+    },
+    setVoteAble(voteAble){
+        this.voteAble = voteAble;
+    },
+    setApiAble(apiAble){
+        this.apiAble = apiAble;
     },
 
     // 타이머 시작

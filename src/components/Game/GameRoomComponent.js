@@ -20,7 +20,7 @@ const GameRoomComponent = () => {
   return (
     <div className="game-room-container">
       <div className="header-area">
-        < GameHeaderComponent />
+        < GameHeaderComponent id={id}/>
       </div>
       <div className="body-area">
         <div className="left-area">

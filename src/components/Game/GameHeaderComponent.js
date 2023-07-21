@@ -1,10 +1,11 @@
 import React from 'react';
 import Timer from '../Timer/Timer';
 
-const GameHeaderComponent = () => {
+const GameHeaderComponent = (props) => {
+    const { id } = props;
     return (
         <div>
-            <Timer/>
+            <Timer id={id}/>
         </div>
     );
 };
