@@ -7,7 +7,7 @@ import indexStore from '../store/Store';
 import GamePlayerList from '../components/Game/GamePlayerList';
 
 const GameRoom = () => {
-    const { id } = useParams();
+    //const { id } = useParams();
     const stompClientRef = useRef(null);
     //const [time, setTime] = useState(70);
     const [isTimeAble, setIsTimeAble] = useState(true);
@@ -28,7 +28,7 @@ const GameRoom = () => {
 
         stompClientRef.current = stompClient;
         stompClient.onConnect = () => {
-            stompClient.subscribe(`/sub/rooms/${id}`, (message) => {
+            stompClient.subscribe(`/sub/rooms/${gameRoomInfoStore.roomKey}`, (message) => {
                 if (message.body) {
                     const body = JSON.parse(message.body);
                     if (body.type === 'TIME_REDUCTION') {
@@ -64,7 +64,7 @@ const GameRoom = () => {
                 />
             </div> */}
             <div>
-                <GamePlayerList id={id} />
+                <GamePlayerList id={gameRoomInfoStore.roomKey} />
             </div>
             {/* <div>
                 <TimeReduction

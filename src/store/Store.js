@@ -22,6 +22,7 @@ const usersStore = observable({
     },
     addAll(users) {
         this.users = this.users.concat(users);
+        console.log(users);
     },
     get sortedUsers() {
         return this.users.slice().sort((a, b) => a.nickname.localeCompare(b.nickname));
@@ -52,7 +53,7 @@ const voteStore = observable({
 });
 
 const gameRoomInfoStore = observable({
-    roomKey: '5abf7',
+    roomKey: '96837',
     time: 0,
     dayNight: 'afternoon',
     timerId: null,

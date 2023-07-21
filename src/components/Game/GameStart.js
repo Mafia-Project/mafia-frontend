@@ -36,7 +36,7 @@ const GameStart = () => {
               usersStore.removeAll();
               usersStore.addAll(data.playerInfo);
               
-            console.log('서버로부터 받은 데이터:', data);
+              console.log('서버로부터 받은 데이터:', data);
             }
             
           }
