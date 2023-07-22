@@ -25,15 +25,63 @@ export default function ParticipantRoomBtnComponent(props) {
   const openPopupModal = () => {
     if (!isModalOpen) {
       setIsModalOpen(true);
-      const modalWindow = window.open('', 'participantRoom', 'width=400,height=300');
+      const modalWindow = window.open('', 'participantRoom', 'width=600,height=400');
       modalWindow.document.write(`
-        <div>
-          <h2>PARTICIPANT</h2>
-          <button id="close">X</button>
-          <label>방 코드 : </label>
-          <input type="text" id="roomKey" name="roomKey" value="${roomInfo.roomKey}"/> <br/>
-          <button id="participant">참가</button>
-        </div>
+      <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Participant Room</title>
+            <style>
+              * {
+                margin: 0;
+                padding: 0;
+                background-color:black;
+                color: white;
+              }
+
+              .OptionContainer{
+                display:flex;
+                flex-direction: column;
+                align-items: left;
+                margin-left:30%;
+                justify-content: center;
+                height: 90vh;
+              } 
+              
+              h2{
+                margin-bottom:30px;
+              }
+
+              #close, #participant{
+                background-color: gray;
+                float: right;
+                color: #ffffff;
+                border: none;
+                border-radius: 20%;
+                padding: 5px 10px;
+                font-size: 18px;
+                cursor: pointer;
+                margin-right: 5px;
+                align-self: flex-end;
+              }
+
+              #close:hover,#participant:hover{
+                background-color: darkgray;
+              }
+            </style>
+          </head>
+          <body>
+            <button id="close">X</button>
+            <div class="OptionContainer">
+              <h2>PARTICIPANT</h2>
+              <div>
+                <label>방 코드 : </label>
+                <input type="text" id="roomKey" name="roomKey" value="${roomInfo.roomKey}"/>
+              </div>
+            </div>
+            <button id="participant">참가</button>
+          </body>
+        </html>
       `);
 
       modalWindow.document.getElementById('roomKey').onchange=handleInputChange;
@@ -86,7 +134,7 @@ export default function ParticipantRoomBtnComponent(props) {
 
   return (
     <div>
-        <button onClick={openPopupModal}>방 참가</button>
+        <button onClick={openPopupModal} class="mainBtn">방 참가</button>
     </div>
   );
 }

@@ -20,7 +20,7 @@ body, html {
     overflow: hidden;
   }
 
-  h1 {
+  .MainLabel {
     font-family: 'Lumanosimo', cursive;
     font-size: 200px;
     font-weight: bold;
@@ -49,7 +49,7 @@ body, html {
     font-family: Arial, sans-serif;
   }
 
-  input[type="text"] {
+  .mainInput {
     padding: 10px;
     font-size: 24px;
     background-color: transparent; /* 배경을 투명하게 설정 */
@@ -61,11 +61,11 @@ body, html {
     box-sizing: content-box;
   }
   
-  input[type="text"]:focus {
+  .mainInput:focus {
     border-color: #72603c;
   }
   
-  button {
+  .mainBtn {
     padding: 12px 24px;
     font-size: 18px;
     font-weight: bold;
@@ -77,6 +77,6 @@ body, html {
     transition: background-color 0.3s ease;
   }
   
-  button:hover {
+  .mainBtn:hover {
     background-color: #8f784b;
   }

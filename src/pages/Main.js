@@ -21,7 +21,7 @@ const Main = () => {
             <MainLabelComponent />
             <div class="NicknameField">
                 <label>Nickname </label>
-                <input type='text' value={nickNameStore.nickname} onChange={handleInputChange} />
+                <input type='text' value={nickNameStore.nickname} onChange={handleInputChange} class="mainInput" />
             </div>
             <div class="ButtonField">
                 <CreateRoomBtnComponent nickname={nickNameStore.nickname} />

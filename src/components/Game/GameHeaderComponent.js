@@ -6,10 +6,17 @@ import RoomCodeComponent from './RoomCodeComponent';
 const GameHeaderComponent = (props) => {
     console.log(props.id);
     return (
-        <div>
-            <GoBackComponent id={props.id} host={props.host}/>
-            <Timer/>
+        <div className='headerComponents'>
+            <div className='headerFirstSection'>
+                <GoBackComponent id={props.id} host={props.host}/>
+                <Timer/>
+            </div>
+            <div className='headerSecondSection'>
             <RoomCodeComponent id={props.id}/>
+            </div>
+            <div>
+
+            </div>
         </div>
     );
 };

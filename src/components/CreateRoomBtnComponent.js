@@ -37,7 +37,7 @@ export default function GameStartBtnComponent(props) {
     if(props.nickname.replace(/(\s*)/g, "")!==""){
       if (!isModalOpen) {
         setIsModalOpen(true);
-        const modalWindow = window.open('', 'createRoom', 'width=350,height=400');
+        const modalWindow = window.open('', 'createRoom', 'width=600,height=400');
         modalWindow.document.write(`
             <!DOCTYPE html>
             <html>
@@ -47,53 +47,83 @@ export default function GameStartBtnComponent(props) {
                 * {
                   margin: 0;
                   padding: 0;
+                  background-color:black;
+                  color: white;
                 }
 
                 .OptionContainer{
                   display:flex;
                   flex-direction: column;
-                  align-items: center;
+                  align-items: left;
+                  margin-left:40%;
                   justify-content: center;
-                  height: 100vh;
+                  height: 90vh;
                 }
-                #close {
-                  background-color: black;
+
+                #close,#setting {
+                  background-color: gray;
+                  float: right;
                   color: #ffffff;
                   border: none;
-                  border-radius: 50%;
+                  border-radius: 20%;
                   padding: 5px 10px;
                   font-size: 18px;
                   cursor: pointer;
-                  margin-top: -15px;
-                  margin-right: -15px;
+                  margin-top: 5px;
+                  margin-right: 5px;
                   align-self: flex-end;
+                }     
+
+                #close:hover,#setting:hover{
+                  background-color: darkgray;
+                }
+
+                .options{
+                  font-size:20px;
+                  margin-left:-100px;
+                }
+
+                .jobs{
+                  margin-top:10px;
+                  display:flex;
+                  flex-direction: row;
+                  justify-content: space-around;
+                }
+
+                .player{
+                  display:flex;
+                  flex-direction: row;
+                  justify-content: space-around;
                 }
                 
-                
-              
+                h2{
+                  margin-bottom:30px;
+                }
               </style>
             </head>
             <body>
+            <button id="close">X</button>
               <div class="OptionContainer">
                 <h2>OPTION</h2>
-                <button id="close">X</button>
-                <div class="player">
-                  <label>플레이어 수 : </label>
-                  <input type="number" id="playerNum" name="playerNum" value="${roomInfo.playerNum}" min='4' max='19'/> <br/>
-                </div>
-                <div class="jobs">
-                  <label>추가 직업 </label>
-                  <div class="job1">
-                    <label>기자 </label>
-                    <input type="checkbox" id="useReporter" name="useReporter" value="${roomInfo.useReporter}"/> <br/>
+                <div class="options">
+                  <div class="player">
+                    <label>플레이어 수</label>
+                    <input type="number" id="playerNum" name="playerNum" value="${roomInfo.playerNum}" min='4' max='19'/> <br/>
                   </div>
-                  <div class="job2">
-                    <label>정신병자 </label>
-                    <input type="checkbox" id="usePsychopath" name="usePsychopath" value="${roomInfo.usePsychopath}"/> <br/>
-                  </div>    
+                  <div class="jobs">
+                    <div class="jobLable">
+                      <label>추가 직업 </label>
+                    </div>
+                    <div class="job">
+                      <label>기자 </label>
+                      <input type="checkbox" id="useReporter" name="useReporter" value="${roomInfo.useReporter}"/> 
+                      <label>정신병자 </label>
+                      <input type="checkbox" id="usePsychopath" name="usePsychopath" value="${roomInfo.usePsychopath}"/> 
+                    </div>    
+                </div>
+                </div>
                 </div>
                 <button id="setting">설정</button>    
-              </div>
             </body>
             </html>
         `);
@@ -138,7 +168,7 @@ export default function GameStartBtnComponent(props) {
 
   return (
     <div>
-        <button onClick={openPopupModal}>방 생성</button>
+        <button onClick={openPopupModal} class="mainBtn">방 생성</button>
     </div>
   );
 }
