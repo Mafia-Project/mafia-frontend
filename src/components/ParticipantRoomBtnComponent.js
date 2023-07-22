@@ -11,7 +11,7 @@ export default function ParticipantRoomBtnComponent(props) {
     roomKey: "",
     isHost: false
   });
-  const { nickNameStore, usersStore, voteStore } = indexStore();
+  const { nickNameStore } = indexStore();
   
   const handleInputChange = (e) => {
     let newRoomInfo = roomInfo;

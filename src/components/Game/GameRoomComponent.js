@@ -20,12 +20,12 @@ const GameRoomComponent = observer(() => {
     useEffect(() => {
       console.log("!!!"+gameRoomInfoStore.dayNight);
       return () => {
-        colorRef.current = gameRoomInfoStore.dayNight==='afternoon'?'white':'black'; // 컴포넌트 언마운트 시 타이머 정리
+        colorRef.current = gameRoomInfoStore.dayNight==='afternoon'?'white':'#5E5EBE'; // 컴포넌트 언마운트 시 타이머 정리
       };
     }, [gameRoomInfoStore.dayNight]);
 
     return (
-      <div className="game-room-container" style={{background: colorRef.current, color:colorRef.current }}>
+      <div className="game-room-container" style={{background: colorRef.current }}>
         {/* 헤더 공간 */}
         <div className="header-area"> 
           < GameHeaderComponent id={id}/>

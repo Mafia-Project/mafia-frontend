@@ -13,7 +13,7 @@ export default function GameStartBtnComponent(props) {
     usePsychopath: false,
     isHost: true
   });
-  const { nickNameStore, usersStore, voteStore } = indexStore();
+  const { nickNameStore} = indexStore();
   
   const handleInputChange = (e) => {
     let newRoomInfo = roomInfo;
