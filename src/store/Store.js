@@ -26,6 +26,14 @@ const usersStore = observable({
             return foundUser;
         }
     },
+    findJobByNickname(nickname) {
+        const foundUser = this.users.find(user => user.nickname === nickname);
+        return foundUser ? foundUser.job : null;
+    },
+    findKilledByNickname(nickname) {
+        const foundUser = this.users.find(user => user.nickname === nickname);
+        return foundUser ? foundUser.killed : null;
+    },
 });
 
 

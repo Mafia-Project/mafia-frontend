@@ -7,6 +7,7 @@ import GameHeaderComponent from './GameHeaderComponent';
 import GameFooterComponent from './GameFooterComponent';
 import { useParams } from 'react-router-dom';
 import Job from '../../public/common/Job';
+import ChatComponent from '../Chat/ChatComponent';
 
 
 const GameRoomComponent = () => {
@@ -31,7 +32,7 @@ const GameRoomComponent = () => {
         </div>
 
         <div className="right-area" style={{ flex: 1, overflowY: 'auto' }}>
-          <ParentComponent />
+          <ChatComponent id={id} />
         </div>
       </div>
       <div className="footer-area">
