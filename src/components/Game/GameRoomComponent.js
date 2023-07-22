@@ -8,6 +8,7 @@ import GameFooterComponent from './GameFooterComponent';
 import { useParams } from 'react-router-dom';
 import Job from '../../public/common/Job';
 import ChatComponent from '../Chat/ChatComponent';
+import indexStore from '../../store/Store';
 
 
 const GameRoomComponent = () => {

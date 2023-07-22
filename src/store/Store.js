@@ -7,6 +7,13 @@ const nickNameStore = observable({
     }
 });
 
+const myJobStore = observable({
+    job: "",
+    setJob(job) {
+        this.job = job;
+    }
+});
+
 const usersStore = observable({
     users: [],
     removeAll() {
@@ -94,6 +101,7 @@ const gameRoomInfoStore = observable({
 });
 
 const indexStore = () => ({ 
+    myJobStore,
     nickNameStore,
     usersStore,
     voteStore,

@@ -12,15 +12,17 @@ const ChatComponent = (props) => {
   //const [username, setUsername] = useState('test_user'); // 유저 이름
   //const [killed, setKilled] = useState(true); // 유저 생존 여부
 
-  const { nickNameStore, usersStore, gameRoomInfoStore } = indexStore();
+  const { nickNameStore, usersStore, gameRoomInfoStore, myJobStore } = indexStore();
 
   const nickname = nickNameStore.nickname;      //닉네임
-  const job = usersStore.findJobByNickname(nickname); // 본인 직업
+  const job = myJobStore.job; // 본인 직업
   const dayNight = gameRoomInfoStore.dayNight;  //낮, 밤
-  const killed = usersStore.findKilledByNickname(nickname);   // 죽음 유무
+  //const killed = usersStore.findKilledByNickname(nickname);   // 죽음 유무
+  const killed = false;
 
   const [commonMessages, setCommonMessages] = useState([]); // 공용 채팅 로그 메시지
   const [mafiaMessages, setMafiaMessages] = useState([]); // 마피아 채팅 로그 메시지
+  const [jobMessages, setJobMessages] = useState([]); // 직업 전용 로그 메시지
   const [inputValue, setInputValue] = useState(''); // 채팅 입력 메시지
 
   const stompClientRef = useRef(null);
@@ -32,7 +34,7 @@ const ChatComponent = (props) => {
     return () => {
       disconnectFromWebSocket();
     };
-  }, [nickNameStore, usersStore, gameRoomInfoStore, nickname, job, dayNight, killed]);
+  }, [nickNameStore, usersStore, gameRoomInfoStore, myJobStore, nickname, job, dayNight, killed]);
 
   // WebSocket 연결
   const connectToWebSocket = () => {
@@ -45,13 +47,21 @@ const ChatComponent = (props) => {
     stompClientRef.current = stompClient;
 
     stompClient.onConnect = () => {
-      console.log('연결');
+      console.log('채팅 연결');
       stompClient.subscribe(`/sub/chat/rooms/${id}`, (message) => {
+        const newMessage = JSON.parse(message.body);
+        console.log('채팅 메시지다', newMessage);
+        saveMessage(newMessage);
+      });
+
+      console.log('연결');
+      stompClient.subscribe(`/sub/rooms/${id}`, (message) => {
         const newMessage = JSON.parse(message.body);
         console.log(newMessage);
         saveMessage(newMessage);
       });
     };
+
 
     stompClient.activate();
   };
@@ -66,7 +76,17 @@ const ChatComponent = (props) => {
   // 메시지 저장
   const saveMessage = (message) => {
     //const newMessage = { ...message, username: username };
+
+    // 시스템 메시지
+    if(message.type === 'NIGHT_END' || message.type === 'END') {
+      setCommonMessages((prevMessages) => [...prevMessages, message]);
+    } else if(message.type === 'NIGHT_EVENT') {
+      if(job === message.receiverJob) {
+        setJobMessages((prevMessages) => [...prevMessages, message]);
+      }
+    }
     
+    // 채팅 메시지
     if (dayNight === 'night') {
       setMafiaMessages((prevMessages) => [...prevMessages, message]);
       console.log(3, job, dayNight);
@@ -108,10 +128,19 @@ const ChatComponent = (props) => {
           {(dayNight === 'night' && job === 'MAFIA'
             ? mafiaMessages
             : commonMessages
-          ).map((message, index) => (
+          ).map((v, index) => (
             <ListItem key={index}>
-              <span className="username">{message.username}: </span>
-              <span className="content">{message.content} </span>
+              <span className="username">{v.username}: </span>
+              <span className="content">{v.content} </span>
+            </ListItem>
+          ))}
+        </List>
+
+        <List>
+        { jobMessages.map((v, index) => (
+            <ListItem key={index} style={{ backgroundColor: 'blue', color: 'white', padding: '8px', borderRadius: '8px' }}>
+              <span className="username">[시스템]: </span>
+              <span className="content">{v.message} </span>
             </ListItem>
           ))}
         </List>
