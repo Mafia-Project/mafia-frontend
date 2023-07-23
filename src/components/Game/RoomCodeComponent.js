@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function RoomCodeComponent(props) {
+    const {color} =props;
     const copyToClipboard = ()=>{
       navigator.clipboard.writeText(
         `마피아 게임에 참여하세요!\n방코드 : ${props.id}\nURL : http://localhost:3000/`)
@@ -13,7 +14,7 @@ export default function RoomCodeComponent(props) {
         });
     }
     return (
-    <div onClick={copyToClipboard} className='roomCodeComponent'>
+    <div onClick={copyToClipboard} className='roomCodeComponent' style={{color: color }}>
       <h1>{props.id}</h1>
       <span>방 코드 복사</span>
       <ToastContainer position="top-center" autoClose={1000}/>

@@ -79,6 +79,7 @@ const voteStore = observable({
 const gameRoomInfoStore = observable({
     roomKey: '',
     time: 0,
+    isStart: false,
     dayNight: 'afternoon',
     timerId: null,
     voteAble: false,
@@ -97,6 +98,9 @@ const gameRoomInfoStore = observable({
     setVoteAble(voteAble){
         this.voteAble = voteAble;
 
+    },
+    setIsStart(isStart){
+        this.isStart = isStart;
     },
     setApiAble(apiAble){
         this.apiAble = apiAble;
@@ -122,6 +126,7 @@ const gameRoomInfoStore = observable({
         this.setDayNight('night');
         this.setTime(users.filter(player => !player.killed).length * 7);
         this.setApiAble(true);
+        this.setIsStart(true);
         this.startTimer();
     
     },
@@ -143,6 +148,7 @@ const gameRoomInfoStore = observable({
         this.setDayNight('afternoon');
         this.setTime(0);
         this.stopTimer();
+        this.setIsStart(false);
         this.setVoteAble(false);
     }
 });

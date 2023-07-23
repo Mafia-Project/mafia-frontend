@@ -4,16 +4,16 @@ import GoBackComponent from './GoBackComponent';
 import RoomCodeComponent from './RoomCodeComponent';
 
 const GameHeaderComponent = (props) => {
-    console.log(props.id);
+    const {id, host, color} = props;
 
     return (
         <div className='headerComponents'>
             <div className='headerFirstSection'>
-                <GoBackComponent id={props.id} host={props.host} />
-                <Timer id={props.id} />
+                <GoBackComponent />
+                <Timer id={id} color={color} />
             </div>
             <div className='headerSecondSection'>
-                <RoomCodeComponent id={props.id} />
+                <RoomCodeComponent id={id} color={color} />
             </div>
             <div>
 

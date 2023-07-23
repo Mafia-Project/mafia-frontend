@@ -55,7 +55,7 @@ export default function GoBackComponent(props) {
 
   return (
     <div>
-        <button onClick={goBackEvent} className='goBackBtn'>←</button>
+        <button onClick={goBackEvent} className='goBackBtn' >←</button>
     </div>
   )
 }

@@ -13,7 +13,7 @@ function TimeReduction(props) {
 
     return (
         <div>
-            <Button variant="outlined" size="large" onClick={(e) => onClickTimeReductionHandler(e)}>
+            <Button variant="outlined" size="large" onClick={(e) => onClickTimeReductionHandler(e)} style={{background: 'white' }}>
                 시간단축
             </Button>
         </div>
