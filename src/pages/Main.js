@@ -10,10 +10,10 @@ import "./Main.css";
 
 
 const Main = () => {
-    const { nickNameStore }  = indexStore();
+    const { myInfoStore }  = indexStore();
 
     const handleInputChange = (event) => {
-        nickNameStore.setNickname(event.target.value);
+        myInfoStore.setNickname(event.target.value);
     }
 
     return useObserver(() => (
@@ -21,11 +21,11 @@ const Main = () => {
             <MainLabelComponent />
             <div class="NicknameField">
                 <label>Nickname </label>
-                <input type='text' value={nickNameStore.nickname} onChange={handleInputChange} class="mainInput" />
+                <input type='text' value={myInfoStore.nickname} onChange={handleInputChange} class="mainInput" />
             </div>
             <div class="ButtonField">
-                <CreateRoomBtnComponent nickname={nickNameStore.nickname} />
-                <ParticipantRoomBtnComponent nickname={nickNameStore.nickname} />
+                <CreateRoomBtnComponent nickname={myInfoStore.nickname} />
+                <ParticipantRoomBtnComponent nickname={myInfoStore.nickname} />
             </div>
         </div>
     ));

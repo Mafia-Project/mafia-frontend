@@ -11,7 +11,7 @@ export default function ParticipantRoomBtnComponent(props) {
     roomKey: "",
     isHost: false
   });
-  const { nickNameStore } = indexStore();
+  const { myInfoStore } = indexStore();
   
   const handleInputChange = (e) => {
     let newRoomInfo = roomInfo;
@@ -98,7 +98,7 @@ export default function ParticipantRoomBtnComponent(props) {
           console.log(res);
           switch(res.data.result){
             case "OK":
-              nickNameStore.setNickname(props.nickname);
+              myInfoStore.setNickname(props.nickname);
               navigate(`/rooms/${newRoomInfo.roomKey}/false`);
               break
             case "NICKNAME":

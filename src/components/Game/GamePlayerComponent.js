@@ -1,8 +1,10 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
+import citizen from '../../public/image/citizen.PNG';
+
 
 function GamePlayerComponent(props) {
-    const { nickname, job, killed, host, image } = props;
+    const { nickname, job, killed, host, image,isOpen } = props;
 
     return (
         <Box
@@ -23,6 +25,7 @@ function GamePlayerComponent(props) {
                 job={job}
                 killed={killed}
                 image={image}
+                isOpen={isOpen}
             />
             <GamePlayerNickName nickname={nickname} host={host} />
             {killed && <GamePlayerOut />}
@@ -32,12 +35,12 @@ function GamePlayerComponent(props) {
 
 
 function GamePlayerImage(props) {
-    const { job, killed, image } = props;
+    const { job, killed, image, isOpen } = props;
 
     return (
         <Box
             component="img"
-            src={image}
+            src={isOpen ? image : citizen }
             alt="image"
             sx={{
                 height: '75%',

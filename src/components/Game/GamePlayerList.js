@@ -4,7 +4,7 @@ import indexStore from '../../store/Store';
 import GamePlayer from './GamePlayer';
 import { observer } from 'mobx-react-lite';
 import { gameJobEventApi, voteApi } from '../../public/api/axios';
-import citizen from '../../public/image/citizen.PNG';
+import Job from '../../public/common/Job';
 
 const GamePlayerList = observer(({ id }) => (
     <Container maxWidth="xs" sx={{ minWidth: '750px' }}>
@@ -15,10 +15,14 @@ const GamePlayerList = observer(({ id }) => (
                         <Box gridColumn="span 3" key={user.nickname}
                             onClick={() => onClickGameEvent(
                                 id,
-                                indexStore().usersStore.findAliveByNickname(indexStore().nickNameStore.nickname),
+                                indexStore().myInfoStore.nickname,
+                                indexStore().myInfoStore.job,
+                                indexStore().myInfoStore.alive,
                                 user,
                                 indexStore().gameRoomInfoStore.dayNight,
-                                indexStore().gameRoomInfoStore.voteAble
+                                indexStore().gameRoomInfoStore.voteAble,
+                                indexStore().gameRoomInfoStore.abilityAble,
+                                indexStore
                             )}>
                             <GamePlayer
                                 nickname={user.nickname}
@@ -27,7 +31,8 @@ const GamePlayerList = observer(({ id }) => (
                                 host={user.host}
                                 voteNum={indexStore().voteStore.findVoteNumByNickname(user.nickname)}
                                 dateNight={indexStore().gameRoomInfoStore.dayNight}
-                                image={citizen}
+                                image={Job.find(job => job.job === user.job).image}
+                                isOpen={user.isOpen}
                             />
                         </Box>
                     )
@@ -37,9 +42,15 @@ const GamePlayerList = observer(({ id }) => (
     </Container>
 ));
 
-const onClickGameEvent = (id, user, target, dateNight, voteAble) => {
-    if (target.killed || user.killed ) return;
-    if(dateNight === 'afternoon' && voteAble) voteApi(id, user.nickname, target.nickname);
-    if(dateNight === 'night' ) gameJobEventApi(id, user.nickname, target.nickname, user.job);
+const onClickGameEvent = (id, voterNickname, voterJob, voterAlive, target, dateNight, voteAble, abilityAble, indexStore) => {
+    if (target.killed || !voterAlive ) return;
+    if(dateNight === 'afternoon' && voteAble) voteApi(id, voterNickname, target.nickname);
+    if(dateNight === 'night' && abilityAble ) {
+        gameJobEventApi(id, voterNickname, target.nickname, voterJob);
+        indexStore().gameRoomInfoStore.setAbilityAble(false);
+        if(voterJob === 'REPORTER'){
+            indexStore().myInfoStore.setJob('CITIZEN');
+        }
+    }
 }
 export default GamePlayerList

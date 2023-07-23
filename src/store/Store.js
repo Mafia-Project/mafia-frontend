@@ -1,9 +1,22 @@
 import { observable } from 'mobx';
 
-const nickNameStore = observable({
+const myInfoStore = observable({
     nickname: "",
+    alive: true,
+    job: "",
+    setMyInfo(myInfo){
+        this.nickname = myInfo.nickname;
+        this.alive = !myInfo.killed;
+        this.job = myInfo.job;
+    },
     setNickname(nickname) {
         this.nickname = nickname;
+    },
+    setAlive(alive) {
+        this.alive = alive;
+    },
+    setJob(job){
+        this.job = job;
     }
 });
 
@@ -41,6 +54,9 @@ const usersStore = observable({
         const foundUser = this.users.find(user => user.nickname === nickname);
         return foundUser ? foundUser.killed : null;
     },
+    setStart(users){
+
+    }
 });
 
 
@@ -66,7 +82,8 @@ const gameRoomInfoStore = observable({
     dayNight: 'afternoon',
     timerId: null,
     voteAble: false,
-    apiAble: false,
+    apiAble: true,
+    abilityAble: true,
     
     setRoomKey(roomKey) {
         this.roomKey = roomKey;
@@ -79,11 +96,14 @@ const gameRoomInfoStore = observable({
     },
     setVoteAble(voteAble){
         this.voteAble = voteAble;
+
     },
     setApiAble(apiAble){
         this.apiAble = apiAble;
     },
-
+    setAbilityAble(abilityAble){
+        this.abilityAble = abilityAble;
+    },
     // 타이머 시작
     startTimer() {
         this.timerId = setInterval(() => {
@@ -98,11 +118,38 @@ const gameRoomInfoStore = observable({
     stopTimer() {
         clearInterval(this.timerId);
     },
+    setStart(users){
+        this.setDayNight('night');
+        this.setTime(users.filter(player => !player.killed).length * 7);
+        this.setApiAble(true);
+        this.startTimer();
+    
+    },
+    setNIGHTEND(users){
+        this.dayNight = 'afternoon';
+        this.time = users.filter(player => !player.killed).length * 20;
+        this.setVoteAble(true);
+        this.setApiAble(true);
+        this.setAbilityAble(true);
+        this.startTimer();
+    },
+    setVoteResult(users){
+        this.setDayNight('night');
+        this.setTime(users.filter(player => !player.killed).length * 7);
+        this.setApiAble(true);
+        this.startTimer();
+    },
+    setEnd(){
+        this.setDayNight('afternoon');
+        this.setTime(0);
+        this.stopTimer();
+        this.setVoteAble(false);
+    }
 });
 
 const indexStore = () => ({ 
     myJobStore,
-    nickNameStore,
+    myInfoStore,
     usersStore,
     voteStore,
     gameRoomInfoStore,

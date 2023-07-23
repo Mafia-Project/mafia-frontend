@@ -5,10 +5,10 @@ import indexStore from '../../store/Store';
 
 function TimeReduction(props) {
     const { id } = props;
-    const { nickNameStore,  gameRoomInfoStore } = indexStore();
+    const { myInfoStore,  gameRoomInfoStore } = indexStore();
 
     const onClickTimeReductionHandler = (e) => {
-        timeReductionApi(id, nickNameStore.nickname, gameRoomInfoStore.time);
+        timeReductionApi(id, myInfoStore.nickname, gameRoomInfoStore.time);
     }
 
     return (

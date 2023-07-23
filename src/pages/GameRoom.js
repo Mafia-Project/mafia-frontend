@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
-import { toast } from 'react-toastify';
 import indexStore from '../store/Store';
 import GamePlayerList from '../components/Game/GamePlayerList';
 
 const GameRoom = (props) => {
     const { id, host } = props;
     const stompClientRef = useRef(null);
-    const { nickNameStore, usersStore, voteStore, gameRoomInfoStore, myJobStore } = indexStore();
+    const { myInfoStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
 
     useEffect(() => {
         connectToWebSocket();
@@ -18,7 +17,7 @@ const GameRoom = (props) => {
 
     const sendInitMsg = () => {
         const message = {
-            nickname: nickNameStore.nickname,
+            nickname: myInfoStore.nickname,
             host: host
         };
 
@@ -51,45 +50,29 @@ const GameRoom = (props) => {
                     if(body.type === 'VOTE'){
                         voteStore.removeAll();
                     }
-                    if(body.type === 'USER_INFO'){
+                    if(body.type === 'USER_INFO' || body.type === 'START' || body.type === 'NIGHT_END' || body.type === 'VOTE_RESULT'){
                         usersStore.removeAll();
                         usersStore.addAll(body.playerInfo);
                     }
-                    if(body.type === 'START'){
-                        usersStore.removeAll();
-                        usersStore.addAll(body.playerInfo);
-                        gameRoomInfoStore.setDayNight('night');
-                        gameRoomInfoStore.setTime(body.playerInfo.filter(player => !player.killed).length * 7);
-                        gameRoomInfoStore.startTimer();
-                        gameRoomInfoStore.setApiAble(true);
-
-                        const job = usersStore.findJobByNickname(nickNameStore.nickname);
-                        myJobStore.setJob(job);
+                    if(body.type === 'START'){ 
+                        gameRoomInfoStore.setStart(body.playerInfo);
+                        myInfoStore.setMyInfo(body.playerInfo.find(user => user.nickname === myInfoStore.nickname));
                     }
                     if(body.type === 'NIGHT_END'){
-                        usersStore.removeAll();
-                        usersStore.addAll(body.playerInfo);
-                        gameRoomInfoStore.setDayNight('afternoon');
-                        gameRoomInfoStore.setTime(body.playerInfo.filter(player => !player.killed).length * 20);
-                        gameRoomInfoStore.setVoteAble(true);
-                        gameRoomInfoStore.startTimer();
-                        gameRoomInfoStore.setApiAble(true);
+                        gameRoomInfoStore.setNIGHTEND(body.playerInfo);
+                        myInfoStore.setMyInfo(body.playerInfo.find(user => user.nickname === myInfoStore.nickname));
+
                     }
                     if(body.type === 'VOTE_RESULT'){
                         voteStore.removeAll();
-                        usersStore.removeAll();
-                        usersStore.addAll(body.playerInfo);
-                        gameRoomInfoStore.setDayNight('night');
-                        gameRoomInfoStore.setTime(body.playerInfo.filter(player => !player.killed).length * 7);
-                        gameRoomInfoStore.startTimer();
-                        gameRoomInfoStore.setApiAble(true);
+                        gameRoomInfoStore.setVoteResult(body.playerInfo);
+                        myInfoStore.setMyInfo(body.playerInfo.find(user => user.nickname === myInfoStore.nickname));
                     }
                     if(body.type === 'END'){
                         gameRoomInfoStore.setApiAble(false);
                         setTimeout(() => {
-                            gameRoomInfoStore.stopTimer();
-                            gameRoomInfoStore.setTime(0);
-                            gameRoomInfoStore.setVoteAble(false);
+                            voteStore.removeAll();
+                            gameRoomInfoStore.setEnd();
                         },1000);
                     }
                 }

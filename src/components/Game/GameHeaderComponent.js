@@ -10,7 +10,7 @@ const GameHeaderComponent = (props) => {
         <div className='headerComponents'>
             <div className='headerFirstSection'>
                 <GoBackComponent id={props.id} host={props.host} />
-                <Timer />
+                <Timer id={props.id} />
             </div>
             <div className='headerSecondSection'>
                 <RoomCodeComponent id={props.id} />

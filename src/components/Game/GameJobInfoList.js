@@ -23,6 +23,7 @@ function GameJobInfoList(props) {
                                     host={false}
                                     dateNight={gameRoomInfoStore.dayNight}
                                     image={job.image}
+                                    isOpen={true}
                                 />
                             </Box>
                         )

@@ -4,7 +4,7 @@ import GameVote from './GameVote';
 import GamePlayerComponent from './GamePlayerComponent';
 
 function GamePlayer(props) {
-    const { nickname, job, killed, voteNum, host, dateNight, image } = props;
+    const { nickname, job, killed, voteNum, host, dateNight, image, isOpen } = props;
     return (
         <>
             <Box>
@@ -14,6 +14,7 @@ function GamePlayer(props) {
                     killed={killed}
                     host={host}
                     image={image}
+                    isOpen={isOpen}
                 />
             </Box>
             <Box

@@ -14,11 +14,11 @@ import GameFooterComponent from './GameFooterComponent';
 
 const GameRoomComponent = observer(() => {
     //const job = { name: '마피아' };
+    const { gameRoomInfoStore, myInfoStore } = indexStore(); 
     const { id, host } = useParams();
     const [job, setJob] = useState(Job[0]);
 
     const colorRef = useRef('white');
-    const { gameRoomInfoStore } = indexStore(); // gameRoomInfoStore 가져오기
 
     useEffect(() => {
       console.log("!!!"+gameRoomInfoStore.dayNight);
@@ -42,7 +42,7 @@ const GameRoomComponent = observer(() => {
       {/* 바디 공간 */}
       <div className="body-area">   
         <div className="left-area"> {/* 왼쪽 공간 */}
-          <JobDescription job="마피아" />
+          <JobDescription job={job} />
         </div>
   
         <div className="center-area"> {/* 가운데 공간 */}
