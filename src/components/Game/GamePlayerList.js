@@ -5,6 +5,7 @@ import GamePlayer from './GamePlayer';
 import { observer } from 'mobx-react-lite';
 import { gameJobEventApi, voteApi } from '../../public/api/axios';
 import Job from '../../public/common/Job';
+import citizen from '../../public/image/citizen.PNG';
 
 const GamePlayerList = observer(({ id }) => (
     <Container maxWidth="xs" sx={{ minWidth: '750px' }}>
@@ -31,7 +32,7 @@ const GamePlayerList = observer(({ id }) => (
                                 host={user.host}
                                 voteNum={indexStore().voteStore.findVoteNumByNickname(user.nickname)}
                                 dateNight={indexStore().gameRoomInfoStore.dayNight}
-                                image={Job.find(job => job.job === user.job).image}
+                                image={Job.find(job => job.job === user.job) ? Job.find(job => job.job === user.job).image : citizen }
                                 isOpen={user.isOpen}
                             />
                         </Box>
