@@ -44,7 +44,7 @@ const GamePlayerList = observer(({ id }) => (
     </Container>
 ));
 
-const onClickGameEvent = (id, voterNickname, voterJob, voterAlive, target, dateNight, voteAble, abilityAble,isStart, indexStore) => {
+const onClickGameEvent = (id, voterNickname, voterJob, voterAlive, target, dateNight, voteAble, abilityAble, isStart, indexStore) => {
     if (target.killed || !voterAlive || !isStart ) return;
     if(dateNight === 'afternoon' && voteAble) voteApi(id, voterNickname, target.nickname);
     if(dateNight === 'night' && abilityAble) {
