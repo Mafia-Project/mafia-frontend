@@ -7,6 +7,13 @@ const nickNameStore = observable({
     }
 });
 
+const myJobStore = observable({
+    job: "",
+    setJob(job) {
+        this.job = job;
+    }
+});
+
 const usersStore = observable({
     users: [],
     removeAll() {
@@ -25,6 +32,14 @@ const usersStore = observable({
             const foundUser = this.users.find(user => user.nickname === nickname);
             return foundUser;
         }
+    },
+    findJobByNickname(nickname) {
+        const foundUser = this.users.find(user => user.nickname === nickname);
+        return foundUser ? foundUser.job : null;
+    },
+    findKilledByNickname(nickname) {
+        const foundUser = this.users.find(user => user.nickname === nickname);
+        return foundUser ? foundUser.killed : null;
     },
 });
 
@@ -86,6 +101,7 @@ const gameRoomInfoStore = observable({
 });
 
 const indexStore = () => ({ 
+    myJobStore,
     nickNameStore,
     usersStore,
     voteStore,

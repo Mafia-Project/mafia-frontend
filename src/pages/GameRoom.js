@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
+import { toast } from 'react-toastify';
 import indexStore from '../store/Store';
 import GamePlayerList from '../components/Game/GamePlayerList';
 
 const GameRoom = (props) => {
     const { id, host } = props;
     const stompClientRef = useRef(null);
-    const { nickNameStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
+    const { nickNameStore, usersStore, voteStore, gameRoomInfoStore, myJobStore } = indexStore();
 
     useEffect(() => {
         connectToWebSocket();
@@ -61,6 +62,9 @@ const GameRoom = (props) => {
                         gameRoomInfoStore.setTime(body.playerInfo.filter(player => !player.killed).length * 7);
                         gameRoomInfoStore.startTimer();
                         gameRoomInfoStore.setApiAble(true);
+
+                        const job = usersStore.findJobByNickname(nickNameStore.nickname);
+                        myJobStore.setJob(job);
                     }
                     if(body.type === 'NIGHT_END'){
                         usersStore.removeAll();

@@ -1,24 +1,23 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-=======
-import React, {useEffect, useRef} from 'react';
->>>>>>> 3f5d283d6506b14f74797842489907d40cb02d1f
+
+import React, {useEffect, useRef, useState} from 'react';
 import './GameRoomComponent.css';
 import JobDescription from './JobDescription';
 import TabMenu from '../TabMenu';
-import ParentComponent from '../Chat/ParentComponent';
 import GameHeaderComponent from './GameHeaderComponent';
-import GameFooterComponent from './GameFooterComponent';
 import { useParams } from 'react-router-dom';
 import indexStore from '../../store/Store';
 import "./GameRoomComponent.css";
 import { observer } from 'mobx-react';
+import Job from '../../public/common/Job';
+import ChatComponent from '../Chat/ChatComponent';
+import GameFooterComponent from './GameFooterComponent';
 
 const GameRoomComponent = observer(() => {
     //const job = { name: '마피아' };
     const { id, host } = useParams();
-    const colorRef = useRef('white');
+    const [job, setJob] = useState(Job[0]);
 
+    const colorRef = useRef('white');
     const { gameRoomInfoStore } = indexStore(); // gameRoomInfoStore 가져오기
 
     useEffect(() => {
@@ -28,20 +27,38 @@ const GameRoomComponent = observer(() => {
       };
     }, [gameRoomInfoStore.dayNight]);
 
+    const onClickJobThumnailHandler = (jobName) => {
+      setJob(Job.find(job => job.job === jobName));
+    }
+  
+
     return (
       <div className="game-room-container" style={{background: colorRef.current }}>
-        {/* 헤더 공간 */}
-        <div className="header-area"> 
-          < GameHeaderComponent id={id}/>
+      {/* 헤더 공간 */}
+      <div className="header-area"> 
+        < GameHeaderComponent id={id}/>
+      </div>
+
+      {/* 바디 공간 */}
+      <div className="body-area">   
+        <div className="left-area"> {/* 왼쪽 공간 */}
+          <JobDescription job="마피아" />
         </div>
-        <div className="center-area">
+  
+        <div className="center-area"> {/* 가운데 공간 */}
           <TabMenu id={id} host={host} onClickJobThumnailHandler={onClickJobThumnailHandler} />
         </div>
-
-        <div className="right-area" style={{ flex: 1, overflowY: 'auto' }}>
-          <ParentComponent />
+  
+        <div className="right-area" style={{ flex: 1, overflowY: 'auto' }}> {/* 오른쪽 공간 */}
+          <ChatComponent id={id} />
         </div>
       </div>
+
+      {/* 푸터 공간 */}
+      <div className="footer-area"> 
+        <GameFooterComponent id={id} host={host}/>
+      </div>
+    </div>
     );
   });
 
