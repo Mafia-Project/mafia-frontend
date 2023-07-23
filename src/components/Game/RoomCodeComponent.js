@@ -13,8 +13,9 @@ export default function RoomCodeComponent(props) {
         });
     }
     return (
-    <div onClick={copyToClipboard}>
+    <div onClick={copyToClipboard} className='roomCodeComponent'>
       <h1>{props.id}</h1>
+      <span>방 코드 복사</span>
       <ToastContainer position="top-center" autoClose={1000}/>
     </div>
   )

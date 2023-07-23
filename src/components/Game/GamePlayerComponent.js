@@ -1,10 +1,10 @@
 import React from 'react'
-import mafia from '../../public/image/mafia.PNG'
-import citizen from '../../public/image/citizen.PNG'
 import { Box, Typography } from '@mui/material'
+import citizen from '../../public/image/citizen.PNG';
+
 
 function GamePlayerComponent(props) {
-    const { nickname, job, killed, host } = props;
+    const { nickname, job, killed, host, image,isOpen } = props;
 
     return (
         <Box
@@ -24,6 +24,8 @@ function GamePlayerComponent(props) {
             <GamePlayerImage
                 job={job}
                 killed={killed}
+                image={image}
+                isOpen={isOpen}
             />
             <GamePlayerNickName nickname={nickname} host={host} />
             {killed && <GamePlayerOut />}
@@ -33,13 +35,13 @@ function GamePlayerComponent(props) {
 
 
 function GamePlayerImage(props) {
-    const { job, killed } = props;
+    const { job, killed, image, isOpen } = props;
 
     return (
         <Box
             component="img"
-            src={citizen}
-            alt="Mafia"
+            src={isOpen ? image : citizen }
+            alt="image"
             sx={{
                 height: '75%',
                 width: '100%',

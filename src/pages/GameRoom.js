@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Client } from '@stomp/stompjs';
 import indexStore from '../store/Store';
 import GamePlayerList from '../components/Game/GamePlayerList';
@@ -6,7 +6,7 @@ import GamePlayerList from '../components/Game/GamePlayerList';
 const GameRoom = (props) => {
     const { id, host } = props;
     const stompClientRef = useRef(null);
-    const { nickNameStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
+    const { myInfoStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
 
     useEffect(() => {
         connectToWebSocket();
@@ -17,7 +17,7 @@ const GameRoom = (props) => {
 
     const sendInitMsg = () => {
         const message = {
-            nickname: nickNameStore.nickname,
+            nickname: myInfoStore.nickname,
             host: host
         };
 
@@ -50,21 +50,30 @@ const GameRoom = (props) => {
                     if(body.type === 'VOTE'){
                         voteStore.removeAll();
                     }
-                    if(body.type === 'USER_INFO'|| body.type === 'NIGHT_END'){
+                    if(body.type === 'USER_INFO' || body.type === 'START' || body.type === 'NIGHT_END' || body.type === 'VOTE_RESULT'){
                         usersStore.removeAll();
                         usersStore.addAll(body.playerInfo);
                     }
-                    if(body.type === 'START'){
-                        usersStore.removeAll();
-                        usersStore.addAll(body.playerInfo);
-                        gameRoomInfoStore.setDayNight('night');
-                        gameRoomInfoStore.setTime(body.playerInfo.length * 20);
-                        gameRoomInfoStore.startTimer();
+                    if(body.type === 'START'){ 
+                        gameRoomInfoStore.setStart(body.playerInfo);
+                        myInfoStore.setMyInfo(body.playerInfo.find(user => user.nickname === myInfoStore.nickname));
+                    }
+                    if(body.type === 'NIGHT_END'){
+                        gameRoomInfoStore.setNIGHTEND(body.playerInfo);
+                        myInfoStore.setMyInfo(body.playerInfo.find(user => user.nickname === myInfoStore.nickname));
+
                     }
                     if(body.type === 'VOTE_RESULT'){
                         voteStore.removeAll();
-                        usersStore.removeAll();
-                        usersStore.addAll(body.playerInfo);
+                        gameRoomInfoStore.setVoteResult(body.playerInfo);
+                        myInfoStore.setMyInfo(body.playerInfo.find(user => user.nickname === myInfoStore.nickname));
+                    }
+                    if(body.type === 'END'){
+                        gameRoomInfoStore.setApiAble(false);
+                        setTimeout(() => {
+                            voteStore.removeAll();
+                            gameRoomInfoStore.setEnd();
+                        },1000);
                     }
                 }
             },

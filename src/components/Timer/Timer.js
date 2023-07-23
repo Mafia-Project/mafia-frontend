@@ -2,21 +2,26 @@ import React, { useEffect } from 'react';
 import './Timer.css';
 import { observer } from 'mobx-react';
 import indexStore from '../../store/Store';
+import { gameNightEndApi, gameVoteResultApi } from '../../public/api/axios';
 
-const Timer = observer(() => {
-  const { gameRoomInfoStore } = indexStore(); // gameRoomInfoStore 가져오기
+const Timer = observer(({id}) => {
+  const { gameRoomInfoStore } = indexStore();
 
   useEffect(() => {
     if (gameRoomInfoStore.time > 0) {
       gameRoomInfoStore.startTimer();
-    } else {
-      gameRoomInfoStore.stopTimer();
     }
-
+  
+    if (gameRoomInfoStore.time === 0 && gameRoomInfoStore.dayNight === 'night' && gameRoomInfoStore.apiAble) {
+      gameNightEndApi(id);
+    } else if (gameRoomInfoStore.time === 0 && gameRoomInfoStore.dayNight === 'afternoon' && gameRoomInfoStore.apiAble) {
+      gameVoteResultApi(id);
+    }
+  
     return () => {
-      gameRoomInfoStore.stopTimer(); // 컴포넌트 언마운트 시 타이머 정리
+      gameRoomInfoStore.stopTimer();
     };
-  }, [gameRoomInfoStore]);
+  }, [gameRoomInfoStore.time, gameRoomInfoStore.dayNight]);
 
   const time = gameRoomInfoStore.time;
   const blinkClass = time <= 5 && time > 0 ? 'blink' : '';
