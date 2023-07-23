@@ -22,7 +22,6 @@ const GameRoomComponent = observer(() => {
     const textRef = useRef('black');
 
     useEffect(() => {
-      console.log("!!!"+gameRoomInfoStore.dayNight);
       return () => {
         colorRef.current = gameRoomInfoStore.dayNight==='afternoon'?'white':'black';
         textRef.current = gameRoomInfoStore.dayNight==='afternoon'?'black':'white';
