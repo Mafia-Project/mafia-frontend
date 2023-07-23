@@ -4,6 +4,7 @@ const nickNameStore = observable({
     nickname: "우진",
     setNickname(nickname) {
         this.nickname = nickname;
+        console.log("at action",this.nickname)
     }
 });
 
