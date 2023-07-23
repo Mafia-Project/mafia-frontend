@@ -13,7 +13,7 @@ export default function GameStartBtnComponent(props) {
     usePsychopath: false,
     isHost: true
   });
-  const { nickNameStore} = indexStore();
+  const { myInfoStore } = indexStore();
   
   const handleInputChange = (e) => {
     let newRoomInfo = roomInfo;
@@ -138,7 +138,7 @@ export default function GameStartBtnComponent(props) {
             nickname:props.nickname
           }; 
 
-          nickNameStore.setNickname(props.nickname);
+          myInfoStore.setNickname(props.nickname);
 
           axios.post('http://localhost:8080/api/v1/createRoom', { 
             nickname: newRoomInfo.nickname,
