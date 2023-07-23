@@ -7,7 +7,7 @@ import { Client } from '@stomp/stompjs';
 export default function GoBackComponent(props) {
     const navigate = useNavigate();
     const stompClientRef = useRef(null);
-    const { nickNameStore } = indexStore();
+    const { myInfoStore } = indexStore();
 
     useEffect(()=>{
       connectToWebSocket();
@@ -29,11 +29,12 @@ export default function GoBackComponent(props) {
 
 
     const sendLeaveMsg = () =>{
+      
       const message = {
-        nickname: nickNameStore.nickname,
+        nickname: myInfoStore.nickname,
         host: props.host
       };
-
+      console.log(message);
       stompClientRef.current.publish({
         destination: `/pub/rooms/${props.id}/quit-game`,
         body: JSON.stringify(message),

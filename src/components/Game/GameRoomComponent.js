@@ -36,7 +36,7 @@ const GameRoomComponent = observer(() => {
       <div className="game-room-container" style={{background: colorRef.current }}>
       {/* 헤더 공간 */}
       <div className="header-area"> 
-        < GameHeaderComponent id={id}/>
+        < GameHeaderComponent id={id} host={host}/>
       </div>
 
       {/* 바디 공간 */}
