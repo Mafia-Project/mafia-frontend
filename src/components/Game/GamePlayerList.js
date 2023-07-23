@@ -50,9 +50,6 @@ const onClickGameEvent = (id, voterNickname, voterJob, voterAlive, target, dateN
     if(dateNight === 'night' && abilityAble) {
         gameJobEventApi(id, voterNickname, target.nickname, voterJob);
         indexStore().gameRoomInfoStore.setAbilityAble(false);
-        if(voterJob === 'REPORTER'){
-            indexStore().myInfoStore.setJob('CITIZEN');
-        }
     }
 }
 export default GamePlayerList
