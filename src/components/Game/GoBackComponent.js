@@ -7,7 +7,7 @@ import { Client } from '@stomp/stompjs';
 export default function GoBackComponent(props) {
     const navigate = useNavigate();
     const stompClientRef = useRef(null);
-    const { nickNameStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
+    const { nickNameStore } = indexStore();
 
     useEffect(()=>{
       connectToWebSocket();
@@ -54,7 +54,7 @@ export default function GoBackComponent(props) {
 
   return (
     <div>
-        <button onClick={goBackEvent}>뒤로 가기</button>
+        <button onClick={goBackEvent} className='goBackBtn'>←</button>
     </div>
   )
 }

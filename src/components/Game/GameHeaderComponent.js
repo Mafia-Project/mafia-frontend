@@ -7,10 +7,17 @@ const GameHeaderComponent = (props) => {
     console.log(props.id);
 
     return (
-        <div>
-            <GoBackComponent id={props.id} host={props.host}/>
-            <Timer id={props.id}/>
-            <RoomCodeComponent id={props.id}/>
+        <div className='headerComponents'>
+            <div className='headerFirstSection'>
+                <GoBackComponent id={props.id} host={props.host} />
+                <Timer />
+            </div>
+            <div className='headerSecondSection'>
+                <RoomCodeComponent id={props.id} />
+            </div>
+            <div>
+
+            </div>
         </div>
     );
 };

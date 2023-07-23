@@ -6,8 +6,8 @@ const GameFooterComponent = (props) => {
     const {id, host} = props;
 
     return (
-        <div>
-            <TimeReduction id={id}/>
+        <div className='footerComponents'>
+            <TimeReduction/>
             <GameStart id={id} host={host}/>
         </div>
     );

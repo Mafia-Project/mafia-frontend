@@ -6,6 +6,8 @@ import ParticipantRoomBtnComponent from '../components/ParticipantRoomBtnCompone
 import indexStore  from '../store/Store';
 import { useObserver } from 'mobx-react-lite';
 
+import "./Main.css";
+
 
 const Main = () => {
     const { nickNameStore }  = indexStore();
@@ -15,12 +17,16 @@ const Main = () => {
     }
 
     return useObserver(() => (
-        <div>
+        <div class="MainPage">
             <MainLabelComponent />
-            <label>닉네임 : </label>
-            <input type='text' value={nickNameStore.nickname} onChange={handleInputChange} />
-            <CreateRoomBtnComponent nickname={nickNameStore.nickname} />
-            <ParticipantRoomBtnComponent nickname={nickNameStore.nickname} />
+            <div class="NicknameField">
+                <label>Nickname </label>
+                <input type='text' value={nickNameStore.nickname} onChange={handleInputChange} class="mainInput" />
+            </div>
+            <div class="ButtonField">
+                <CreateRoomBtnComponent nickname={nickNameStore.nickname} />
+                <ParticipantRoomBtnComponent nickname={nickNameStore.nickname} />
+            </div>
         </div>
     ));
 }
