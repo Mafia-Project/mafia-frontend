@@ -124,6 +124,7 @@ const gameRoomInfoStore = observable({
     },
     setStart(users){
         this.setDayNight('night');
+        this.stopTimer();
         this.setTime(users.filter(player => !player.killed).length * 7);
         this.setApiAble(true);
         this.setIsStart(true);
@@ -132,6 +133,7 @@ const gameRoomInfoStore = observable({
     },
     setNIGHTEND(users){
         this.dayNight = 'afternoon';
+        this.stopTimer();
         this.time = users.filter(player => !player.killed).length * 20;
         this.setVoteAble(true);
         this.setApiAble(true);
@@ -140,14 +142,15 @@ const gameRoomInfoStore = observable({
     },
     setVoteResult(users){
         this.setDayNight('night');
+        this.stopTimer();
         this.setTime(users.filter(player => !player.killed).length * 7);
         this.setApiAble(true);
         this.startTimer();
     },
     setEnd(){
         this.setDayNight('afternoon');
-        this.setTime(0);
         this.stopTimer();
+        this.setTime(0);
         this.setIsStart(false);
         this.setVoteAble(false);
     }
