@@ -25,7 +25,7 @@ const GameStart = (props) => {
     return (
       <div>
         {/* {console.log('방장이냐', isHostActive)} */}
-        <Button variant="outlined" size="large" onClick={() => onClickGameStart()} disabled={!isHostActive || buttonClicked}>
+        <Button variant="outlined" size="large" style={{background: 'white' }} onClick={() => onClickGameStart()} disabled={!isHostActive || buttonClicked}>
           게임 시작
         </Button>
       </div>

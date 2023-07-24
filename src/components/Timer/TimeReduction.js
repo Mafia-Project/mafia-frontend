@@ -1,11 +1,13 @@
 import { Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { timeReductionApi } from '../../public/api/axios';
 import indexStore from '../../store/Store';
+import { observer } from 'mobx-react';
 
-function TimeReduction(props) {
+const TimeReduction = observer((props)=> {
     const { id } = props;
     const { myInfoStore,  gameRoomInfoStore, timeReductionStore } = indexStore();
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     // 버튼 클릭 여부 상태를 저장하기 위한 useState 훅 사용
     const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -23,13 +25,17 @@ function TimeReduction(props) {
         }
     }
 
+    useEffect(() => {
+      setIsButtonDisabled(!myInfoStore.alive);
+    }, [myInfoStore.alive]);
+
     return (
         <div>
-            <Button variant="outlined" size="large" onClick={(e) => onClickTimeReductionHandler(e)} disabled={timeReductionStore.getFlag() || isButtonClicked}>
+            <Button id="reductionTimeBtn" variant="outlined" size="large" style={{background: 'white' }} onClick={(e) => onClickTimeReductionHandler(e)} disabled={timeReductionStore.getFlag() || isButtonClicked || isButtonDisabled}>
                 시간단축
             </Button>
         </div>
     )
-}
+});
 
 export default TimeReduction

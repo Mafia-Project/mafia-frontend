@@ -13,10 +13,10 @@ const ChatComponent = (props) => {
   const dayNight = gameRoomInfoStore.dayNight;  //낮, 밤
   const killed = false;
 
-  const [commonMessages, setCommonMessages] = useState([]); // 공용 채팅 로그 메시지
-  const [mafiaMessages, setMafiaMessages] = useState([]); // 마피아 채팅 로그 메시지
-  const [systemMessage, setSystemMessage] = useState([]); // 직업 전용 로그 메시지
-  const [inputValue, setInputValue] = useState(''); // 채팅 입력 메시지
+  const [commonMessages, setCommonMessages] = useState([]);
+  const [mafiaMessages, setMafiaMessages] = useState([]); 
+  const [systemMessage, setSystemMessage] = useState([]); 
+  const [inputValue, setInputValue] = useState(''); 
 
   const stompClientRef = useRef(null);
 
@@ -39,12 +39,11 @@ const ChatComponent = (props) => {
   useEffect(scrollToBottom, [systemMessage]);
   useEffect(scrollMessageToBottom, [mafiaMessages, commonMessages]);
 
-  // WebSocket 연결
   const connectToWebSocket = () => {
     const socket = new WebSocket('ws://localhost:8080/connect');
     const stompClient = new Client({
       webSocketFactory: () => socket,
-      debug: () => { }, // 디버그 메시지 출력 방지
+      debug: () => { },
     });
 
     stompClientRef.current = stompClient;
@@ -52,7 +51,6 @@ const ChatComponent = (props) => {
     stompClient.onConnect = () => {
       stompClient.subscribe(`/sub/chat/rooms/${id}`, (message) => {
         const newMessage = JSON.parse(message.body);
-        console.log('chat: ', newMessage);
         saveMessage(newMessage);
       });
     };
@@ -68,7 +66,6 @@ const ChatComponent = (props) => {
 
   // 메시지 저장
   const saveMessage = (message) => {
-    console.log(message.username);
     if (message.type === 'SYSTEM') {
       setSystemMessage((prevMessages) => [...prevMessages, message]);
     } else if (message.type === 'JOB' && message.jobType === myInfoStore.job) {
@@ -82,12 +79,10 @@ const ChatComponent = (props) => {
     }
   }
 
-  // 채팅 입력창
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  // 채팅 전송 버튼 클릭 시
   const handleSendMessage = () => {
     if (inputValue.trim() !== '') {
       const message = {

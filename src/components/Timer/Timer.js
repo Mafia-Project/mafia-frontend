@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import indexStore from '../../store/Store';
 import { gameNightEndApi, gameVoteResultApi } from '../../public/api/axios';
 
-const Timer = observer(({id}) => {
+const Timer = observer(({id, color}) => {
   const { gameRoomInfoStore } = indexStore();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Timer = observer(({id}) => {
   return (
     <svg width="80" height="80" className={blinkClass}>
       <circle cx="40" cy="40" r="35" stroke="red" strokeWidth="2" fill="transparent" />
-      <text x="40" y="45" textAnchor="middle" fontSize="20" fontWeight="bold">
+      <text x="40" y="45" textAnchor="middle" fontSize="20" fontWeight="bold" fill={color} >
         {time.toString().padStart(2, '0')}
       </text>
     </svg>

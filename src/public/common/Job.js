@@ -31,7 +31,7 @@ const Job = [
         jobDescription : '밤마다 한 사람을 지목하여 대상이 마피아에게 공격받을 경우, 대상을 치료한다'
     },
     {
-        job: "PSYCHOPAYH",
+        job: "PSYCHOPATH",
         image: psychopath,
         jobName: "정신병자",
         jobDescription : '헤에엫 선생님 저거 뭐에요?'

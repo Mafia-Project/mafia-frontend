@@ -23,6 +23,7 @@ const GamePlayerList = observer(({ id }) => (
                                 indexStore().gameRoomInfoStore.dayNight,
                                 indexStore().gameRoomInfoStore.voteAble,
                                 indexStore().gameRoomInfoStore.abilityAble,
+                                indexStore().gameRoomInfoStore.isStart,
                                 indexStore
                             )}>
                             <GamePlayer
@@ -43,15 +44,12 @@ const GamePlayerList = observer(({ id }) => (
     </Container>
 ));
 
-const onClickGameEvent = (id, voterNickname, voterJob, voterAlive, target, dateNight, voteAble, abilityAble, indexStore) => {
-    if (target.killed || !voterAlive ) return;
+const onClickGameEvent = (id, voterNickname, voterJob, voterAlive, target, dateNight, voteAble, abilityAble, isStart, indexStore) => {
+    if (target.killed || !voterAlive || !isStart ) return;
     if(dateNight === 'afternoon' && voteAble) voteApi(id, voterNickname, target.nickname);
-    if(dateNight === 'night' && abilityAble ) {
+    if(dateNight === 'night' && abilityAble) {
         gameJobEventApi(id, voterNickname, target.nickname, voterJob);
         indexStore().gameRoomInfoStore.setAbilityAble(false);
-        if(voterJob === 'REPORTER'){
-            indexStore().myInfoStore.setJob('CITIZEN');
-        }
     }
 }
 export default GamePlayerList

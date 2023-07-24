@@ -40,7 +40,6 @@ const GameRoom = (props) => {
                     const body = JSON.parse(message.body);
                     console.log(body);
                     if (body.type === 'TIME_REDUCTION') {
-                        console.log(body.time);
                         gameRoomInfoStore.setTime(body.time);
                     }
                     if(body.type === 'CURRENT_VOTE'){
@@ -55,6 +54,7 @@ const GameRoom = (props) => {
                         usersStore.addAll(body.playerInfo);
                     }
                     if(body.type === 'START'){ 
+                        voteStore.removeAll();
                         gameRoomInfoStore.setStart(body.playerInfo);
                         myInfoStore.setMyInfo(body.playerInfo.find(user => user.nickname === myInfoStore.nickname));
                     }
@@ -64,6 +64,7 @@ const GameRoom = (props) => {
                         timeReductionStore.setFlag(false);
                     }
                     if(body.type === 'VOTE_RESULT'){
+                        console.log("voteResult");
                         voteStore.removeAll();
                         gameRoomInfoStore.setVoteResult(body.playerInfo);
                         myInfoStore.setMyInfo(body.playerInfo.find(user => user.nickname === myInfoStore.nickname));

@@ -19,11 +19,12 @@ const GameRoomComponent = observer(() => {
     const [job, setJob] = useState(Job[0]);
 
     const colorRef = useRef('white');
+    const textRef = useRef('black');
 
     useEffect(() => {
-      console.log("!!!"+gameRoomInfoStore.dayNight);
       return () => {
-        colorRef.current = gameRoomInfoStore.dayNight==='afternoon'?'white':'#5E5EBE'; // 컴포넌트 언마운트 시 타이머 정리
+        colorRef.current = gameRoomInfoStore.dayNight==='afternoon'?'white':'black';
+        textRef.current = gameRoomInfoStore.dayNight==='afternoon'?'black':'white';
       };
     }, [gameRoomInfoStore.dayNight]);
 
@@ -36,16 +37,16 @@ const GameRoomComponent = observer(() => {
       <div className="game-room-container" style={{background: colorRef.current }}>
       {/* 헤더 공간 */}
       <div className="header-area"> 
-        < GameHeaderComponent id={id} host={host}/>
+        < GameHeaderComponent id={id} color={textRef.current}/>
       </div>
 
       {/* 바디 공간 */}
-      <div className="body-area">   
+      <div className="body-area" style={{background: 'white' }}>   
         <div className="left-area"> {/* 왼쪽 공간 */}
           <JobDescription job={job} />
         </div>
   
-        <div className="center-area"> {/* 가운데 공간 */}
+        <div className="center-area" > {/* 가운데 공간 */}
           <TabMenu id={id} host={host} onClickJobThumnailHandler={onClickJobThumnailHandler} />
         </div>
   
