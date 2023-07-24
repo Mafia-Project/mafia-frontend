@@ -54,6 +54,10 @@ const usersStore = observable({
         const foundUser = this.users.find(user => user.nickname === nickname);
         return foundUser ? foundUser.killed : null;
     },
+    findHostByNickname(nickname) {
+        const foundUser = this.users.find(user => user.nickname === nickname);
+        return foundUser ? foundUser.host : false;
+    },
     setStart(users){
 
     }
@@ -147,12 +151,30 @@ const gameRoomInfoStore = observable({
     }
 });
 
+const timeReductionStore = observable({
+    flag: true,
+    isButtonClicked: true,
+    getFlag() {
+        return this.flag;
+    },
+    setFlag(flag) {
+        this.flag = flag;
+    },
+    getIsButtonClicked() {
+        return this.isButtonClicked;
+    },
+    setIsButtonClicked(isButtonClicked) {
+        this.isButtonClicked = !isButtonClicked;
+    },
+});
+
 const indexStore = () => ({ 
     myJobStore,
     myInfoStore,
     usersStore,
     voteStore,
     gameRoomInfoStore,
+    timeReductionStore
 });
 
 export default indexStore;

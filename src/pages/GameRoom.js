@@ -6,7 +6,7 @@ import GamePlayerList from '../components/Game/GamePlayerList';
 const GameRoom = (props) => {
     const { id, host } = props;
     const stompClientRef = useRef(null);
-    const { myInfoStore, usersStore, voteStore, gameRoomInfoStore } = indexStore();
+    const { myInfoStore, usersStore, voteStore, gameRoomInfoStore, timeReductionStore } = indexStore();
 
     useEffect(() => {
         connectToWebSocket();
@@ -61,12 +61,13 @@ const GameRoom = (props) => {
                     if(body.type === 'NIGHT_END'){
                         gameRoomInfoStore.setNIGHTEND(body.playerInfo);
                         myInfoStore.setMyInfo(body.playerInfo.find(user => user.nickname === myInfoStore.nickname));
-
+                        timeReductionStore.setFlag(false);
                     }
                     if(body.type === 'VOTE_RESULT'){
                         voteStore.removeAll();
                         gameRoomInfoStore.setVoteResult(body.playerInfo);
                         myInfoStore.setMyInfo(body.playerInfo.find(user => user.nickname === myInfoStore.nickname));
+                        timeReductionStore.setFlag(true);
                     }
                     if(body.type === 'END'){
                         gameRoomInfoStore.setApiAble(false);
